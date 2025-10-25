@@ -24,3 +24,9 @@ stud1.grade(2)
 stud1.grade(5)
 stud1.printer()
 stud1.final_grade()
+
+
+
+
+
+

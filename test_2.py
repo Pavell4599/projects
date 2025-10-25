@@ -1,3 +1,11 @@
-pp={'a': 1, 'b': 2, 'c': 3}
-for g in pp:
-    print(pp[g])
+try:
+    x = int(input())
+except ValueError:
+    print('ValueError')
+
+y = [5, 4, 3, 2, 5, 5, 4]
+print(sum(y))
+
+    
+    
+    
