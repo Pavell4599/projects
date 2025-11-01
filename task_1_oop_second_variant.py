@@ -34,19 +34,19 @@ class Journal:
     
     
     
-clas1=Journal('10-I')
-clas1.add_student(['Пётр Васин', 'Вовочка', 'Антон'])
-clas1.add_subjects('Английский язык')
-clas1.add_subjects('Программирование')
+journal_class_1=Journal('10-I')
+journal_class_1.add_student(['Пётр Васин', 'Вовочка', 'Антон'])
+journal_class_1.add_subjects('Английский язык')
+journal_class_1.add_subjects('Программирование')
 
-clas1.rate_students('Вовочка', 'Программирование', 4)
-clas1.rate_students('Вовочка', 'Программирование', 5)
-clas1.rate_students('Вовочка', 'Программирование', 3)
-clas1.rate_students('Вовочка', 'Программирование', 5)
-clas1.rate_students('Вовочка', 'Программирование', 5)
-clas1.rate_students('Вовочка', 'Программирование', 1)
+journal_class_1.rate_students('Вовочка', 'Программирование', 4)
+journal_class_1.rate_students('Вовочка', 'Программирование', 5)
+journal_class_1.rate_students('Вовочка', 'Программирование', 3)
+journal_class_1.rate_students('Вовочка', 'Программирование', 5)
+journal_class_1.rate_students('Вовочка', 'Программирование', 5)
+journal_class_1.rate_students('Вовочка', 'Программирование', 1)
 
-clas1.print_statistics('Вовочка', 'Программирование')
-clas1.print_middle('Вовочка', 'Программирование')
+journal_class_1.print_statistics('Вовочка', 'Программирование')
+journal_class_1.print_middle('Вовочка', 'Программирование')
 
 
