@@ -1,4 +1,5 @@
 import numpy as np 
+import time
 
 
 N = 5
@@ -15,7 +16,16 @@ print(trigonometry_array)
 
 first_column = 3
 second_column = 4
+
+timer = time.time()
 for i in range(N):
     trigonometry_array[i, first_column], trigonometry_array[i, second_column] = trigonometry_array[i, second_column], trigonometry_array[i, first_column]
+print(time.time() - timer)
+
+timer = time.time()
+trigonometry_array[:, first_column], trigonometry_array[:, second_column] = trigonometry_array[:, second_column], trigonometry_array[:, first_column]
+print(time.time() - timer)
 
 print(trigonometry_array)
+
+

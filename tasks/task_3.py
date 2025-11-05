@@ -22,3 +22,8 @@ for i in range(6):
 print(txy)
 print(ans)
 
+
+
+
+
+
