@@ -1,7 +1,7 @@
-def square(a, n):
+def square(osnovanie, pokazatel):
     ans = 1
-    for _ in range(n):
-        ans = ans * a 
+    for _ in range(pokazatel):
+        ans = ans * osnovanie 
     return ans
 
 

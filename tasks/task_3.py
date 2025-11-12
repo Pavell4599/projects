@@ -1,7 +1,7 @@
 from task_3_constants import g
 
 
-def tme(m: int, v: int, h: int):
+def tme(m: int, v: int, h: int) -> float:
     E = m * v**2 / 2 + m * g * h
     return E
 
