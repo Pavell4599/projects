@@ -7,7 +7,7 @@ from monsters import *
 class Castle:
 
     def __init__(self, player):
-        self.hp = 100000
+        self.hp = 1000000
         self.castle_color = player.player_color
         self.monsters_in_castle_list = {'General': (), 'Skeleton': (), 'Pig': (), 'Helicopter': (), 'Foodman': ()}
 
