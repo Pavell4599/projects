@@ -1,7 +1,3 @@
-class MyClass:
-    def __init__(self):
-        self.name = "Mys"
-
-class_name_str = "MyClass"
-my_object = globals()[class_name_str]()
-print(my_object)
+my_list = [1, 2, 2, 3, 4, 4, 5]
+unique_list = list(set(my_list))
+print(unique_list)
