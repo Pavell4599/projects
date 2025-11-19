@@ -13,3 +13,9 @@ summ = sum(ar1) + sum(ar2) + sum(ar3)
 
 
 print(maxx, summ)
+
+
+
+
+rand_uniform_array = np.random.randint(5, 10, 7)
+print(f"Array of random ints (5-10): {rand_uniform_array}")
