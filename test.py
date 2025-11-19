@@ -1,16 +1,11 @@
-# Функция ord переводит символы в их ASCII коды
-# А функция chr производит обратную операцию
+# zip() - итератор, объединяющий элементы из
+# нескольких источников данных
 
-text = "Hello"
+names = ["John", "David", "Maria", "Richard"]
+ages = [16, 25, 19, 41]
+isTeenager = [True, False, True, False]
 
-for symbol in text:
-    print(ord(symbol), end="; ")
-print()
+users = list(zip(names, ages, isTeenager))
+print(users)
 
-codes = [119, 111, 114, 108, 100]
-symbols = ""
-
-for code in codes:
-    symbols += chr(code)
-
-print(symbols)
+print("User age:", dict(zip(names, ages)))
