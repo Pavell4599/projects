@@ -1,11 +1,8 @@
-# zip() - итератор, объединяющий элементы из
-# нескольких источников данных
+a = (1, 4, 5, 3)
+b = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+for numb in a:
+    b.remove(numb)
 
-names = ["John", "David", "Maria", "Richard"]
-ages = [16, 25, 19, 41]
-isTeenager = [True, False, True, False]
 
-users = list(zip(names, ages, isTeenager))
-print(users)
+print(b)
 
-print("User age:", dict(zip(names, ages)))
