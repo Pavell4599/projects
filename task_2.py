@@ -14,3 +14,12 @@ for symbol in name_lower:
 
 print(max(name_ord_upper), min(name_ord_upper))
 print(max(name_ord_lower), min(name_ord_lower))
+
+
+
+
+name_1str = list(map(ord, '_'.join(name).upper()))
+print(max(name_1str), min(name_1str))
+
+
+

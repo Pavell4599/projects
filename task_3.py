@@ -5,14 +5,14 @@ M = int(input())
 N = int(input())
 timer = time.time()
 for i in range(M):
-    time.sleep(1)
+    time.sleep(0.5)
     print(i)
     for j in range(N):
-        time.sleep(1)
+        time.sleep(0.25)
         print(f'\t {j}')
 
-timer = time.time()-timer
 
 
-print(timer)
+
+print(timer - time.time())
 
