@@ -10,7 +10,10 @@ if __name__ == '__main__':
     castle1 = Castle(player1)
     hero1 = Hero(castle1)
     hero1.castle.create_monster('Pig', 5)
-    hero1.check_monster_hp('Pig')
-
-    hero1.castle.create_monster('Helicopter', 4)
-    hero1.check_monster_hp('Helicopter')
+    hero1.castle.create_monster('Helicopter', 3)
+    hero1.castle.create_monster('General', 4)
+    
+    
+    
+    
+    hero1.check_all_hp()

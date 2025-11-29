@@ -1,4 +1,3 @@
-a = [1, 2, 3]
-b = [4, 5, 6]
-c = a + b
-print(c)
+a = {'pis': 12, 'matvey': 45, 'vova': 55}
+for key in a:
+    print(key)
