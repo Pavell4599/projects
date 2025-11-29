@@ -17,9 +17,9 @@ class Castle:
 
 
 
-
-# player_1 = Player('red', 'Pasha_victory_man')
-# castle_1 = Castle(player_1)
-# castle_1.create_monster('Pig', 2)
-# print(castle_1.monsters_in_castle_list)
-# print(castle_1.monsters_in_castle_list['Pig'])
+if __name__ == '__main__':
+    player_1 = Player('red', 'Pasha_victory_man')
+    castle_1 = Castle(player_1)
+    castle_1.create_monster('Pig', 2)
+    print(castle_1.monsters_in_castle_list)
+    print(castle_1.monsters_in_castle_list['Pig'])

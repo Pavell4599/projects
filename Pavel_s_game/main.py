@@ -5,12 +5,12 @@ from hero import *
 
 
 
+if __name__ == '__main__':
+    player1 = Player('red', 'Pavel_Legendaren')
+    castle1 = Castle(player1)
+    hero1 = Hero(castle1)
+    hero1.castle.create_monster('Pig', 5)
+    hero1.check_monster_hp('Pig')
 
-player1 = Player('red', 'Pavel_Legendaren')
-castle1 = Castle(player1)
-hero1 = Hero(castle1)
-hero1.castle.create_monster('Pig', 3)
-hero1.check_monster_hp('Pig')
-
-hero1.castle.create_monster('Helicopter', 2)
-hero1.check_monster_hp('Helicopter')
+    hero1.castle.create_monster('Helicopter', 4)
+    hero1.check_monster_hp('Helicopter')

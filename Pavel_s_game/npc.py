@@ -12,5 +12,6 @@ class NPC:
 
 
 
-# a = NPC()
-# print(a.npc_monster_list)
+if __name__ == '__main__':
+    a = NPC()
+    print(a.npc_monster_list)
