@@ -1,3 +1,10 @@
-a = {'pis': 12, 'matvey': 45, 'vova': 55}
-for key in a:
-    print(key)
+a = {'nus': [1, 2, 4], 'eje': 7}
+print(len(a))
+
+a['nus'].remove(4)
+print(a)
+
+a['nus'].append('popa')
+print(a)
+
+
