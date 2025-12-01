@@ -3,6 +3,7 @@
 class General:
 
     def __init__(self)-> None:
+        self.name = 'General'
         self.hp = 500
         self.dmc = 50
 
@@ -10,6 +11,7 @@ class General:
 class Skeleton:
 
     def __init__(self)-> None:
+        self.name = 'Skeleton'
         self.hp = 200
         self.dmc = 25
 
@@ -17,6 +19,7 @@ class Skeleton:
 class Pig:
 
     def __init__(self)-> None:
+        self.name = 'Pig'
         self.hp = 750
         self.dmc = 30
 
@@ -24,6 +27,7 @@ class Pig:
 class Helicopter:
 
     def __init__(self)-> None:
+        self.name = 'Helicopter'
         self.hp = 1000
         self.dmc = 200
 
@@ -31,6 +35,7 @@ class Helicopter:
 class Foodman:
 
     def __init__(self)-> None:
+        self.name = 'Foodman'
         self.hp = 600
         self.dmc = 10
 

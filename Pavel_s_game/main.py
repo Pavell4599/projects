@@ -29,6 +29,7 @@ hero1.check_all_hp()
 
 
 hero1.check_map()
-
+hero1.create_npcs(5)
+hero1.check_map()
 # hero1.check_monster_hp('General')
 # hero1.check_monster_hp('Pig')
