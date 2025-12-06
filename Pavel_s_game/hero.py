@@ -156,21 +156,26 @@ class Hero:
              
             
             if len(hero_monster_list) == 0 and len(enemy_monster_list) == 0:
+                time.sleep(1)
                 result = 'НИЧЬЯ'
                 break
             elif len(enemy_monster_list) == 0:
                 hero_monster = hero_monster_list[0]
+                time.sleep(1)
+                print('---ВСЕ МОНСТРЫ ВРАГА УМЕРЛИ!---')
                 while enemy.hp > 0:
-                    time.sleep(0.35)
+                    time.sleep(0.45)
                     print(f'{hero_monster.name}: {hero_monster.hp} --> {enemy.name}: {enemy.hp}')
                     enemy.hp -= hero_monster.dmc
                 result = 'ВЫ ВЫИГРАЛИ'
                 break
             elif len(hero_monster_list) == 0:
                 enemy_monster = enemy_monster_list[0]
+                time.sleep(1)
+                print('---ВСЕ ВАШИ МОНСТРЫ УМЕРЛИ!----')
                 while self.hp > 0:
-                    time.sleep(0.35)
-                    print(f'{enemy_monster.name}: {enemy_monster.hp} --> ВАШ ГЕРОЙ: {self.hp}')
+                    time.sleep(0.45)
+                    print(f'ВАШ ГЕРОЙ: {self.hp} <-- {enemy_monster.name}: {enemy_monster.hp}')
                     self.hp -= enemy_monster.dmc
                 result = 'ВЫ ПРОИГРАЛИ'
                 break
@@ -180,7 +185,7 @@ class Hero:
             enemy_monster = enemy_monster_list[0]
             hero_monster = hero_monster_list[0]
             while (enemy_monster.hp > 0 and hero_monster.hp > 0):
-                time.sleep(0.2)
+                time.sleep(0.35)
                 print(f'{hero_monster.name}: {hero_monster.hp} VS {enemy_monster.name}: {enemy_monster.hp}')
                 hero_monster.hp -= enemy_monster.dmc
                 enemy_monster.hp -= hero_monster.dmc
