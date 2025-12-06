@@ -9,18 +9,18 @@ class NPC:
         self.npc_monster_list = {'General': [], 'Skeleton': [], 'Pig': [], 'Helicopter': [], 'Foodman': []}
         
         for monster_name in self.npc_monster_list:
-            monster_class_name = globals()[monster_name]()
-            for i in range(rd.randint(1, 3)):
-                self.npc_monster_list[monster_name].append(monster_class_name)
-                monster_class_name = globals()[monster_name]()
-        
-        monster_index = 0
+            for _ in range(rd.randint(1, 3)):
+                monster = globals()[monster_name]()
+                self.npc_monster_list[monster_name].append(monster)
+                
+
         for monster_name in self.npc_monster_list:
             
             monster_list = self.npc_monster_list[monster_name]
             monster_index = 0
             for i in range(len(monster_list)):
-                monster_list[i].name += f'_{str(monster_index)}'
+                monster = monster_list[i]
+                monster.name += f'_{str(monster_index)}'
                 monster_index += 1
                 
 

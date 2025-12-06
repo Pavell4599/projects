@@ -1,29 +1,33 @@
 from npc import NPC
+from map import Map
+import time
 
 
 class Hero:
 
-    def __init__(self, castle):
+    def __init__(self, castle, map):
         self.hero_color = castle.castle_color
         self.hp = 1500
-        self.monsters_with_hero_list = {'General': [], 'Skeleton': [], 'Pig': [], 'Helicopter': [], 'Foodman': []}
-        self.position = 'inside'
         self.castle = castle
+        self.map = map
 
 
     def check_map(self):
         print('------Существа на карте-----')
-        print(self.castle.npcs_list)
+        all_creature_list = self.map.npcs_list
+        for creature_list in all_creature_list:
+            for creature in all_creature_list[creature_list]:
+                print(creature.name)
+            
+        print(self.map.npcs_list)
         print('----------------------------')
         
         
     def go_outside(self):
-        self.position = 'outside'
         self.castle.hero_position = 'outside'
 
 
     def go_inside(self):
-        self.position = 'inside'
         self.castle.hero_position = 'inside'
 
 
@@ -48,7 +52,7 @@ class Hero:
             for i in range(monster_in_castle_count):
                 print(f'    {monster_list[i].name}: {monster_list[i].hp} hp')
             
-        monster_list = self.monsters_with_hero_list[monster_name]
+        monster_list = self.castle.monsters_with_hero_list[monster_name]
         monster_with_hero_count = len(monster_list)
 
         if monster_with_hero_count != 0:
@@ -62,7 +66,7 @@ class Hero:
     def check_all_hp(self)-> str:
         print('-------Ваше здоровье-------')
         self.check_hero_hp()
-        monster_names_list = list(self.monsters_with_hero_list.keys())
+        monster_names_list = list(self.castle.monsters_with_hero_list.keys())
         
         print('Монстры в замке:')
         is_castle_empty = 0
@@ -82,7 +86,7 @@ class Hero:
         is_hero_empty = 0
         for i in range(len(monster_names_list)):
             monster_name = monster_names_list[i]
-            monster_list = self.monsters_with_hero_list[monster_name]
+            monster_list = self.castle.monsters_with_hero_list[monster_name]
             monster_with_hero_count = len(monster_list)
             is_hero_empty += len(monster_list)
             
@@ -105,7 +109,7 @@ class Hero:
             for monster_index in monster_list[monster_name]: 
                 now_append_monster = self.castle.monsters_in_castle_list[monster_name][monster_index]
                 remove_monsters_list.append(now_append_monster)
-                self.monsters_with_hero_list[monster_name].append(now_append_monster)
+                self.castle.monsters_with_hero_list[monster_name].append(now_append_monster)
                 
             for monster in remove_monsters_list: 
                 self.castle.monsters_in_castle_list[monster_name].remove(monster)
@@ -116,34 +120,52 @@ class Hero:
         for monster_name in monster_list:
             remove_monsters_list = []
             for monster_index in monster_list[monster_name]: 
-                now_append_monster = self.monsters_with_hero_list[monster_name][monster_index]
+                now_append_monster = self.castle.monsters_with_hero_list[monster_name][monster_index]
                 remove_monsters_list.append(now_append_monster)
                 self.castle.monsters_in_castle_list[monster_name].append(now_append_monster)
                 
             for monster in remove_monsters_list: 
-                self.monsters_with_hero_list[monster_name].remove(monster)
+                self.castle.monsters_with_hero_list[monster_name].remove(monster)
 
              
                 
-    def atack(self):
-        pass
+    def atack(enemy_name: str, **monster_list: dict):
+        fight_counter = 0
+        result = ''
+        enemy_name_in_npcs_list = enemy_name.split('_')[0]
+        enemy_list = self.map.npcs_list[enemy_name_in_npcs_list]
+        for creature in enemy_list:
+            if creature.name == enemy_name:
+                enemy = creature
+                
+        while True:
+            enemy_monster_list = enemy.npc_monster_list
+            hero_monster_list = monster 
+            if len(enemy_monster_list) == 0:
+                pass
+            elif len(enemy_monster_list) == 0:
+                pass
+            else:
+                result = '>>>>>>>>>>_НИЧЬЯ_<<<<<<<<<<<'
 
 
-    #специальный метод  
-    def create_npcs(self, npc_count: int)-> list:
-        for _ in range(npc_count):
-            self.castle.npcs_list.append(NPC())
-    #специальный метод 
+            enemy_monster = enemy_monster_list[0]
+            hero_monster = hero_monster_list[0]
+            while (enemy_monster.hp <= 0 or hero_monster.hp <= 0):
+
+
+
+
+            
+
+        
+
+
+    
             
             
        
+
 if __name__ == '__main__':
-    from player import Player
-    player1 = Player('red', 'Pavel_Legendaren')
-    castle1 = Castle(player1)
-    hero1 = Hero(castle1)
-    hero1.castle.create_monster('Pig', 3)
-    hero1.check_monster_hp('Pig')
-    hero1.castle.create_monster('Helicopter', 2)
-    hero1.check_monster_hp('Helicopter')
+
 
