@@ -1,6 +1,4 @@
-penis = 0
-gg = 0
-if penis == 0:
-    print(555)
-elif gg == 0:
-    print(555)
+a = []
+b = []
+if len(a) == 0 and len(b) == 0:
+    print('penis')

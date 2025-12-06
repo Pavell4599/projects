@@ -9,7 +9,7 @@ class Map:
         self.npcs_list = {'Фермер': [], 'Боярин': [], 'Казак': [], 'Мушкетёр': [], 'Горожанин': []}
 
         #заполняем список нпс и нумеруем их
-        for _ in range(rd.randint(4, 10)):
+        for _ in range(rd.randint(6, 12)):
             npc = NPC()
             self.npcs_list[npc.name].append(npc)
 

@@ -129,43 +129,91 @@ class Hero:
 
              
                 
-    def atack(enemy_name: str, **monster_list: dict):
-        fight_counter = 0
+    def atack(self, enemy_name: str):
         result = ''
+
+
+
         enemy_name_in_npcs_list = enemy_name.split('_')[0]
         enemy_list = self.map.npcs_list[enemy_name_in_npcs_list]
         for creature in enemy_list:
             if creature.name == enemy_name:
                 enemy = creature
                 
+
+        enemy_monster_list = []
+        for monster_list in enemy.npc_monster_list:
+            for monster in enemy.npc_monster_list[monster_list]:
+                enemy_monster_list.append(monster)
+
+        hero_monster_list = []
+        for monster_list in self.castle.monsters_with_hero_list:
+            for monster in self.castle.monsters_with_hero_list[monster_list]:
+                hero_monster_list.append(monster)
+
+
         while True:
-            enemy_monster_list = enemy.npc_monster_list
-            hero_monster_list = monster 
-            if len(enemy_monster_list) == 0:
-                pass
+             
+            
+            if len(hero_monster_list) == 0 and len(enemy_monster_list) == 0:
+                result = 'НИЧЬЯ'
+                break
             elif len(enemy_monster_list) == 0:
-                pass
-            else:
-                result = '>>>>>>>>>>_НИЧЬЯ_<<<<<<<<<<<'
+                hero_monster = hero_monster_list[0]
+                while enemy.hp > 0:
+                    time.sleep(0.35)
+                    print(f'{hero_monster.name}: {hero_monster.hp} --> {enemy.name}: {enemy.hp}')
+                    enemy.hp -= hero_monster.dmc
+                result = 'ВЫ ВЫИГРАЛИ'
+                break
+            elif len(hero_monster_list) == 0:
+                enemy_monster = enemy_monster_list[0]
+                while self.hp > 0:
+                    time.sleep(0.35)
+                    print(f'{enemy_monster.name}: {enemy_monster.hp} --> ВАШ ГЕРОЙ: {self.hp}')
+                    self.hp -= enemy_monster.dmc
+                result = 'ВЫ ПРОИГРАЛИ'
+                break
+                
 
 
             enemy_monster = enemy_monster_list[0]
             hero_monster = hero_monster_list[0]
-            while (enemy_monster.hp <= 0 or hero_monster.hp <= 0):
+            while (enemy_monster.hp > 0 and hero_monster.hp > 0):
+                time.sleep(0.2)
+                print(f'{hero_monster.name}: {hero_monster.hp} VS {enemy_monster.name}: {enemy_monster.hp}')
+                hero_monster.hp -= enemy_monster.dmc
+                enemy_monster.hp -= hero_monster.dmc
 
 
+            if hero_monster.hp <= 0 and enemy_monster.hp <= 0:
+                enemy_monster_list.remove(enemy_monster)
+                hero_monster_list.remove(hero_monster)
+            elif enemy_monster.hp <= 0:
+                enemy_monster_list.remove(enemy_monster)
+            elif hero_monster.hp <= 0:
+                hero_monster_list.remove(hero_monster)
+
+        
+        for monster in enemy_monster_list:
+            monster_name = monster.name.split('_')[0]
+            enemy.npc_monster_list[monster_name].append(monster)
+
+        for monster in hero_monster_list:
+            monster_name = monster.name.split('_')[0]
+            self.castle.monsters_with_hero_list[monster_name].append(monster)
 
 
-            
+        time.sleep(3)
+        print(f'|-------------> {result} <-------------|')
+
+
+        
 
         
 
 
-    
-            
-            
-       
-
 if __name__ == '__main__':
+    pass
 
 
