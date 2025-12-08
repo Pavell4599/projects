@@ -37,7 +37,7 @@ def arc_spiral(k = 0.9):
 
 def gezl_spiral(k = 0.02):
     
-    fi = np.arange(0.01, 8 * np.pi, 0.01)
+    fi = np.arange(0.01, 9 * np.pi, 0.01)
     r = k / np.sqrt(fi)
     
     x = r * np.cos(fi)

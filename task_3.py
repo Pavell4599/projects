@@ -3,7 +3,7 @@ import numpy as np
 
 
 
-def elips(x0, x1, y0, y1, step, a = 0.74, b = 0.4):
+def ellipse(x0, x1, y0, y1, step, a = 0.74, b = 0.4):
     
     x = np.arange(x0, x1, step)
     y = np.arange(y0, y1, step)
@@ -23,4 +23,4 @@ def elips(x0, x1, y0, y1, step, a = 0.74, b = 0.4):
 
 
 if __name__ == '__main__':
-    elips(-1, 1, -2, 2, 0.01)
+    ellipse(-1, 1, -2, 2, 0.01)
