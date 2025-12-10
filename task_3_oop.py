@@ -2,8 +2,6 @@ import random as rd
 
 
 class Puppy:
-    
-    
     def __init__(self, index):
         self.index = index
         self.states = ['идеальное здоровье', 'нормальное здоровье', 'допустимое здоровье', 'предболезненнное состояние', 'болеет']
@@ -23,8 +21,6 @@ class Puppy:
             
         
 class Dog:
-    
-    
     def __init__(self, dogs_count):
         self.dogs_count = dogs_count
         self.puppies = {}
@@ -51,8 +47,6 @@ class Dog:
     
 
 class Vet:
-    
-    
     def __init__(self, name, dog):
         self.name = name
         self.plant = dog
@@ -71,41 +65,47 @@ class Vet:
         
         
     def knowledge_base(self):
-        for i in range(len(self.plant.puppies)):
-            dog_name = 'dog_' + str(i)
-            dog_state_index = self.plant.puppies[dog_name].state
-            dog_state = self.plant.puppies[dog_name].states[dog_state_index]
-           
-            print(dog_name, dog_state)
+        if len(self.plant.puppies) == 0:
+            print('Щенков нет.')
+            
+        else:
+            for i in range(len(self.plant.puppies)):
+                dog_name = 'dog_' + str(i)
+                dog_state_index = self.plant.puppies[dog_name].state
+                dog_state = self.plant.puppies[dog_name].states[dog_state_index]
+               
+                print(dog_name, dog_state)
+            
 
         
-
-print('******** Тест 1 ********')
-dog_mother_1 = Dog(7)
-veter = Vet('Алексей Ветеренар', dog_mother_1)
-
-veter.knowledge_base()
-veter.work()
-veter.work()
-veter.work()
-veter.work()
-veter.care()
-
-print('******** Тест 2 ********')
-dog_mother_2 = Dog(4)
-veter = Vet('Алексей Ветеренар', dog_mother_2)
-
-veter.work()
-veter.care()
-veter.work()
-veter.care()
-veter.work()
-veter.care()
-
-print()
-print('Это словарь со всеми щенками, если они все здоровы, то он пустой')
-print(veter.plant.puppies)
-print()
+if __name__ == '__main__':
+    print('******** Тест 1 ********')
+    dog_mother_1 = Dog(7)
+    veter = Vet('Алексей Ветеренар', dog_mother_1)
+    
+    veter.knowledge_base()
+    veter.work()
+    veter.work()
+    veter.work()
+    veter.work()
+    veter.care()
+    veter.knowledge_base()
+    
+    # print('******** Тест 2 ********')
+    # dog_mother_2 = Dog(4)
+    # veter = Vet('Алексей Ветеренар', dog_mother_2)
+    
+    # veter.work()
+    # veter.care()
+    # veter.work()
+    # veter.care()
+    # veter.work()
+    # veter.care()
+    
+    # print()
+    # print('Это словарь со всеми щенками, если они все здоровы, то он пустой')
+    # print(veter.plant.puppies)
+    # print()
 
 
 
