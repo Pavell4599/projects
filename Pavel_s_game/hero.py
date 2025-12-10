@@ -13,15 +13,15 @@ class Hero:
 
 
     def check_map(self):
+        print()
         print('------Существа на карте-----')
         all_creature_list = self.map.npcs_list
         for creature_list in all_creature_list:
             for creature in all_creature_list[creature_list]:
                 print(creature.name)
             
-        print(self.map.npcs_list)
         print('----------------------------')
-        
+         
         
     def go_outside(self):
         self.castle.hero_position = 'outside'
@@ -32,10 +32,12 @@ class Hero:
 
 
     def check_hero_hp(self):
+        print()
         print('Здоровье героя:', self.hp)
 
 
     def check_monster_hp(self, monster_name: str)-> str:
+        print()
         #декоративная шапка со срезом
         defoult_head = '----------------------------'
         right_head = int((28 - len(monster_name)) / 2)
@@ -64,6 +66,7 @@ class Hero:
         
         
     def check_all_hp(self)-> str:
+        print()
         print('-------Ваше здоровье-------')
         self.check_hero_hp()
         monster_names_list = list(self.castle.monsters_with_hero_list.keys())
@@ -102,7 +105,7 @@ class Hero:
         print('----------------------------')
     
     
-    def take_monsters_from_castle(self, **monster_list: dict)-> list:
+    def take_monsters_from_castle(self, **monster_list)-> list:
         
         for monster_name in monster_list:
             remove_monsters_list = []
@@ -115,8 +118,10 @@ class Hero:
                 self.castle.monsters_in_castle_list[monster_name].remove(monster)
                 
                 
-    def send_monsters_to_castle(self, **monster_list: dict)-> list:
-        
+    def send_monsters_to_castle(self, **monster_list)-> list:
+        '''
+        **monster принимает ...
+        '''
         for monster_name in monster_list:
             remove_monsters_list = []
             for monster_index in monster_list[monster_name]: 
@@ -130,6 +135,7 @@ class Hero:
              
                 
     def atack(self, enemy_name: str):
+        print()
         result = ''
 
 

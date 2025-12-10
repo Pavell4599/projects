@@ -5,9 +5,9 @@ from map import Map
 
 
 player = Player('red', 'Gena')
-map1 = Map('my map')
+map_1 = Map('my map')
 dragon_castle = Castle(player)
-g = Hero(dragon_castle, map1)
+g = Hero(dragon_castle, map_1)
 
 
 
