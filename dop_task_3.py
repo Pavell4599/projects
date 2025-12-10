@@ -24,6 +24,7 @@ def abx(a: int, b: int, steps: int):
     plt.plot(x, y, marker = '', color = 'y')
     plt.title('abx')
     plt.axis('equal')
+    plt.grid()
     plt.savefig('dop_task_3.png')
 
     print(x)
