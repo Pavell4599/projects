@@ -20,7 +20,7 @@ class NPC:
             monster_index = 0
             for i in range(len(monster_list)):
                 monster = monster_list[i]
-                monster.name += f'_{str(monster_index)}'
+                monster.name += f' {str(monster_index)}'
                 monster_index += 1
                 
 

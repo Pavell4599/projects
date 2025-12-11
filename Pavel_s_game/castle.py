@@ -29,7 +29,7 @@ class Castle:
             
             for i in range(monster_list_len_before_append, len(monster_list)):
                 monster = monster_list[i]
-                monster.name += f'_{str(monster_index)}'
+                monster.name += f' {str(monster_index)}'
                 monster_index += 1
             
         

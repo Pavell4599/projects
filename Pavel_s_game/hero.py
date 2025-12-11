@@ -10,6 +10,7 @@ class Hero:
         self.hp = 1500
         self.castle = castle
         self.map = map
+        self.monsters_with_hero_limit = 15
 
 
     def check_map(self):
@@ -106,16 +107,29 @@ class Hero:
     
     
     def take_monsters_from_castle(self, **monster_list)-> list:
-        
-        for monster_name in monster_list:
-            remove_monsters_list = []
-            for monster_index in monster_list[monster_name]: 
-                now_append_monster = self.castle.monsters_in_castle_list[monster_name][monster_index]
-                remove_monsters_list.append(now_append_monster)
-                self.castle.monsters_with_hero_list[monster_name].append(now_append_monster)
-                
-            for monster in remove_monsters_list: 
-                self.castle.monsters_in_castle_list[monster_name].remove(monster)
+
+        if len(self.castle.monsters_with_hero_list) <= self.monsters_with_hero_limit:
+            is_limit = 0
+            for monster_name in monster_list:
+                is_limit += len(monster_list[monster_name])
+            if is_limit <= self.monsters_with_hero_limit:
+                for monster_name in monster_list:
+                    remove_monsters_list = []
+                    for monster_index in monster_list[monster_name]: 
+                        now_append_monster = self.castle.monsters_in_castle_list[monster_name][monster_index]
+                        remove_monsters_list.append(now_append_monster)
+                        self.castle.monsters_with_hero_list[monster_name].append(now_append_monster)
+                    
+                    for monster in remove_monsters_list: 
+                        self.castle.monsters_in_castle_list[monster_name].remove(monster)
+            else:
+                print()
+                print('Вы выбрали слишком много монстров!')
+                print(f'Лимит монстров: {monsters_with_hero_limit}.')
+        else:
+                print()
+                print('С вами уже максимум монстров!')
+                print(f'Лимит монстров: {monsters_with_hero_limit}.')
                 
                 
     def send_monsters_to_castle(self, **monster_list)-> list:

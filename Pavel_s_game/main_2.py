@@ -12,11 +12,14 @@ g = Hero(dragon_castle, map_1)
 
 
 
-g.castle.create_monster('Skeleton', 20)
+g.castle.create_monster('Helicopter', 10)
+g.castle.create_monster('Pig', 10)
 # g.check_map()
-g.take_monsters_from_castle(Skeleton=[0,1,2,3,4,5,6,7,8,9,10])
-
-g.atack('Казак_0')
+g.take_monsters_from_castle(Helicopter=[0,1,2,3,4,5])
+g.take_monsters_from_castle(Pig=[0,1,2,3,4,5,6,7,8,9])
+g.take_monsters_from_castle(Helicopter=[0])
+g.check_all_hp()
+# g.atack('Фермер_0')
 
 
 
