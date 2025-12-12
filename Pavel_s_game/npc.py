@@ -5,7 +5,7 @@ class NPC:
 
     def __init__(self)-> None:
         self.name = rd.choice(['Фермер', 'Боярин', 'Казак', 'Мушкетёр', 'Горожанин'])
-        self.hp = rd.randrange(100, 1025, 25)
+        self.hp = rd.randrange(400, 1025, 25)
         self.npc_mon_list = {'General': [], 'Skeleton': [], 'Pig': [], 'Helicopter': [], 'Foodman': []}
         
         for mon_name in self.npc_mon_list:

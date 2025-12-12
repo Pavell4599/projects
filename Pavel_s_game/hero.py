@@ -16,11 +16,12 @@ class Hero:
     def check_map(self):
         print()
         print('------Существа на карте-----')
+        print()
         all_creature_list = self.map.npcs_list
         for creature_list in all_creature_list:
             for creature in all_creature_list[creature_list]:
                 print(creature.name)
-            
+        print()
         print('----------------------------')
          
         
@@ -37,7 +38,7 @@ class Hero:
         print('Здоровье героя:', self.hp)
 
 
-    def check__hp(self, mon_name: str)-> str:
+    def check_monster_hp(self, mon_name: str)-> str:
         print()
         #декоративная шапка со срезом
         defoult_head = '----------------------------'
@@ -46,32 +47,39 @@ class Hero:
         head = defoult_head[0: left_head] + mon_name + defoult_head[0: right_head]
         print(head)
         #декоративная шапка со срезом
-        
+
         mon_list = self.castle.mons_in_castle_list[mon_name]
         mon_in_castle_count = len(mon_list)
+        is_castle_empty = mon_in_castle_count
 
+        print('В замке:')
         if mon_in_castle_count != 0:
-            print('В замке:')
             for i in range(mon_in_castle_count):
-                print(f'    {mon_list[i].name}: {mon_list[i].hp} hp')
+                print(f'  {mon_list[i].name}: {mon_list[i].hp} hp')
+        if is_castle_empty == 0:
+            print(f'  В замке нет {mon_name}')
             
         mon_list = self.castle.mons_with_hero_list[mon_name]
         mon_with_hero_count = len(mon_list)
-
+        is_castle_empty = mon_with_hero_count
+        print()
+        print('С героем:')
         if mon_with_hero_count != 0:
-            print('С героем:')
             for i in range(mon_with_hero_count):
-                print(f'    {mon_list[i].name}: {mon_list[i].hp} hp')
-        
+                print(f'  {mon_list[i].name}: {mon_list[i].hp} hp')
+        if is_castle_empty == 0:
+            print(f'  С героем нет {mon_name}')
+
         print('----------------------------')
         
         
     def check_all_hp(self)-> str:
         print()
         print('-------Ваше здоровье-------')
-        self.check_hero_hp()
+        print('Здоровье героя:', self.hp)
         mon_names_list = list(self.castle.mons_with_hero_list.keys())
         
+        print()
         print('Монстры в замке:')
         is_castle_empty = 0
         for i in range(len(mon_names_list)):
@@ -83,9 +91,12 @@ class Hero:
             if mon_in_castle_count != 0:
                 
                 for j in range(mon_in_castle_count):
-                    print(f'    {mon_list[j].name}: {mon_list[j].hp} hp')
-               
-                    
+                    print(f'  {mon_list[j].name}: {mon_list[j].hp} hp')
+        if is_castle_empty == 0:
+
+            print('  В замке нет монстров') 
+
+        print() 
         print('Монстры с героем:')
         is_hero_empty = 0
         for i in range(len(mon_names_list)):
@@ -97,10 +108,11 @@ class Hero:
             if mon_with_hero_count != 0:
                 
                 for j in range(mon_with_hero_count):
-                    print(f'    {mon_list[j].name}: {mon_list[j].hp} hp')
+                    print(f'  {mon_list[j].name}: {mon_list[j].hp} hp')
                     
         if is_hero_empty == 0:
-            print('    герой без монстров')
+            
+            print('  Герой без монстров')
                 
         
         print('----------------------------')
@@ -116,7 +128,7 @@ class Hero:
         if group == '':
 
             if len(self.castle.mons_with_hero_list) <= self.mons_with_hero_limit:
-                is_limit = 0
+                is_limit = len(self.castle.mons_with_hero_list)
                 for mon_name in mon_list:
                     is_limit += len(mon_list[mon_name])
                 if is_limit <= self.mons_with_hero_limit:
@@ -124,12 +136,21 @@ class Hero:
                         remove_mons_list = []
                         mon_index_list = []
 
-                        for mon_index in mon_list[mon_name]:
-                            mon_index
+                        for mon in self.castle.mons_in_castle_list[mon_name]:
+
+                            numb_start = mon.name.index(' ') + 1
+                            mon_name_index = int(mon.name[numb_start:])
+                            mon_index_list.append(mon_name_index)
+
 
                         for mon_index in mon_list[mon_name]:
-                            
-                            now_append_mon = self.castle.mons_in_castle_list[mon_name][mon_index_list[mon_index]]
+                            try:
+                                append_mon_index = mon_index_list.index(mon_index)
+                            except ValueError:
+                                print()
+                                print(f'{mon_name} {mon_index} нету в замке')
+                                continue
+                            now_append_mon = self.castle.mons_in_castle_list[mon_name][append_mon_index]
                             remove_mons_list.append(now_append_mon)
                             self.castle.mons_with_hero_list[mon_name].append(now_append_mon)
                         
@@ -150,19 +171,61 @@ class Hero:
 
                     
                     
-        def send_monsters_to_castle(self, **mon_list)-> list:
+        def send_monsters_to_castle(self, group = '',  **mon_list)-> list:
             '''
-            **mon принимает ...
+            виды параметра group:
+            all -> отправляете всех монстров в замок
             '''
-            for mon_name in mon_list:
-                remove_mons_list = []
-                for mon_index in mon_list[mon_name]: 
-                    now_append_mon = self.castle.mons_with_hero_list[mon_name][mon_index]
-                    remove_mons_list.append(now_append_mon)
-                    self.castle.mons_in_castle_list[mon_name].append(now_append_mon)
-                    
-                for mon in remove_mons_list: 
-                    self.castle.mons_with_hero_list[mon_name].remove(mon)
+            if group == '':
+                for mon_name in mon_list:
+                        remove_mons_list = []
+                        mon_index_list = []
+
+                        for mon in self.castle.mons_with_hero_list[mon_name]:
+
+                            numb_start = mon.name.index(' ') + 1
+                            mon_name_index = int(mon.name[numb_start:])
+                            mon_index_list.append(mon_name_index)
+
+
+                        for mon_index in mon_list[mon_name]:
+                            try:
+                                append_mon_index = mon_index_list.index(mon_index)
+                            except ValueError:
+                                print()
+                                print(f'{mon_name} {mon_index} нету у героя')
+                                continue
+                            now_append_mon = self.castle.mons_with_hero_list[mon_name][append_mon_index]
+                            remove_mons_list.append(now_append_mon)
+                            self.castle.mons_in_castle_list[mon_name].append(now_append_mon)
+                        
+                        for mon in remove_mons_list: 
+                            self.castle.mons_with_hero_list[mon_name].remove(mon)
+            elif group == 'all':
+                for mon_name in self.mon_list:
+                        remove_mons_list = []
+                        mon_index_list = []
+
+                        for mon in self.castle.mons_with_hero_list[mon_name]:
+
+                            numb_start = mon.name.index(' ') + 1
+                            mon_name_index = int(mon.name[numb_start:])
+                            mon_index_list.append(mon_name_index)
+
+
+                        for mon_index in mon_list[mon_name]:
+                            
+                            now_append_mon = self.castle.mons_with_hero_list[mon_name][mon_index]
+                            remove_mons_list.append(now_append_mon)
+                            self.castle.mons_in_castle_list[mon_name].append(now_append_mon)
+                        
+                        for mon in remove_mons_list: 
+                            self.castle.mons_with_hero_list[mon_name].remove(mon)
+            else:
+                print()
+                print('Параметр group введен некорректно')
+                print('Подсказка:')
+                print('  group=all -> отправляете всех монстров в замок')
 
              
                 

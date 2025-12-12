@@ -1,3 +1,5 @@
-a = 'penis 999'
-probel = a.index(' ')
-b = a[-1: probel]
+a = ['999', 'sosiska', 'kaka', 'pipka']
+b = []
+
+for l in b:
+    print(9) 
