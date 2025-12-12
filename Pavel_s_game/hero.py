@@ -10,7 +10,7 @@ class Hero:
         self.hp = 1500
         self.castle = castle
         self.map = map
-        self.monsters_with_hero_limit = 15
+        self.mons_with_hero_limit = 15
 
 
     def check_map(self):
@@ -37,31 +37,31 @@ class Hero:
         print('Здоровье героя:', self.hp)
 
 
-    def check_monster_hp(self, monster_name: str)-> str:
+    def check__hp(self, mon_name: str)-> str:
         print()
         #декоративная шапка со срезом
         defoult_head = '----------------------------'
-        right_head = int((28 - len(monster_name)) / 2)
-        left_head = 28 - len(monster_name) - right_head
-        head = defoult_head[0: left_head] + monster_name + defoult_head[0: right_head]
+        right_head = int((28 - len(mon_name)) / 2)
+        left_head = 28 - len(mon_name) - right_head
+        head = defoult_head[0: left_head] + mon_name + defoult_head[0: right_head]
         print(head)
         #декоративная шапка со срезом
         
-        monster_list = self.castle.monsters_in_castle_list[monster_name]
-        monster_in_castle_count = len(monster_list)
+        mon_list = self.castle.mons_in_castle_list[mon_name]
+        mon_in_castle_count = len(mon_list)
 
-        if monster_in_castle_count != 0:
+        if mon_in_castle_count != 0:
             print('В замке:')
-            for i in range(monster_in_castle_count):
-                print(f'    {monster_list[i].name}: {monster_list[i].hp} hp')
+            for i in range(mon_in_castle_count):
+                print(f'    {mon_list[i].name}: {mon_list[i].hp} hp')
             
-        monster_list = self.castle.monsters_with_hero_list[monster_name]
-        monster_with_hero_count = len(monster_list)
+        mon_list = self.castle.mons_with_hero_list[mon_name]
+        mon_with_hero_count = len(mon_list)
 
-        if monster_with_hero_count != 0:
+        if mon_with_hero_count != 0:
             print('С героем:')
-            for i in range(monster_with_hero_count):
-                print(f'    {monster_list[i].name}: {monster_list[i].hp} hp')
+            for i in range(mon_with_hero_count):
+                print(f'    {mon_list[i].name}: {mon_list[i].hp} hp')
         
         print('----------------------------')
         
@@ -70,34 +70,34 @@ class Hero:
         print()
         print('-------Ваше здоровье-------')
         self.check_hero_hp()
-        monster_names_list = list(self.castle.monsters_with_hero_list.keys())
+        mon_names_list = list(self.castle.mons_with_hero_list.keys())
         
         print('Монстры в замке:')
         is_castle_empty = 0
-        for i in range(len(monster_names_list)):
-            monster_name = monster_names_list[i]
-            monster_list = self.castle.monsters_in_castle_list[monster_name]
-            monster_in_castle_count = len(monster_list)
-            is_castle_empty += len(monster_list)
+        for i in range(len(mon_names_list)):
+            mon_name = mon_names_list[i]
+            mon_list = self.castle.mons_in_castle_list[mon_name]
+            mon_in_castle_count = len(mon_list)
+            is_castle_empty += len(mon_list)
             
-            if monster_in_castle_count != 0:
+            if mon_in_castle_count != 0:
                 
-                for j in range(monster_in_castle_count):
-                    print(f'    {monster_list[j].name}: {monster_list[j].hp} hp')
+                for j in range(mon_in_castle_count):
+                    print(f'    {mon_list[j].name}: {mon_list[j].hp} hp')
                
                     
         print('Монстры с героем:')
         is_hero_empty = 0
-        for i in range(len(monster_names_list)):
-            monster_name = monster_names_list[i]
-            monster_list = self.castle.monsters_with_hero_list[monster_name]
-            monster_with_hero_count = len(monster_list)
-            is_hero_empty += len(monster_list)
+        for i in range(len(mon_names_list)):
+            mon_name = mon_names_list[i]
+            mon_list = self.castle.mons_with_hero_list[mon_name]
+            mon_with_hero_count = len(mon_list)
+            is_hero_empty += len(mon_list)
             
-            if monster_with_hero_count != 0:
+            if mon_with_hero_count != 0:
                 
-                for j in range(monster_with_hero_count):
-                    print(f'    {monster_list[j].name}: {monster_list[j].hp} hp')
+                for j in range(mon_with_hero_count):
+                    print(f'    {mon_list[j].name}: {mon_list[j].hp} hp')
                     
         if is_hero_empty == 0:
             print('    герой без монстров')
@@ -106,45 +106,63 @@ class Hero:
         print('----------------------------')
     
     
-    def take_monsters_from_castle(self, **monster_list)-> list:
+    def take_monsters_from_castle(self, group = '', **mon_list)-> list:
+        '''
+        виды параметра group:
+          all -> берете всех монстров из замка к себе, если их меньше лимита
+          all_random_(count) -> берете (count) рандомных монстров из замка
+          all_(count) -> берете (count) первых монстров из замка
+        '''
+        if group == '':
 
-        if len(self.castle.monsters_with_hero_list) <= self.monsters_with_hero_limit:
-            is_limit = 0
-            for monster_name in monster_list:
-                is_limit += len(monster_list[monster_name])
-            if is_limit <= self.monsters_with_hero_limit:
-                for monster_name in monster_list:
-                    remove_monsters_list = []
-                    for monster_index in monster_list[monster_name]: 
-                        now_append_monster = self.castle.monsters_in_castle_list[monster_name][monster_index]
-                        remove_monsters_list.append(now_append_monster)
-                        self.castle.monsters_with_hero_list[monster_name].append(now_append_monster)
-                    
-                    for monster in remove_monsters_list: 
-                        self.castle.monsters_in_castle_list[monster_name].remove(monster)
+            if len(self.castle.mons_with_hero_list) <= self.mons_with_hero_limit:
+                is_limit = 0
+                for mon_name in mon_list:
+                    is_limit += len(mon_list[mon_name])
+                if is_limit <= self.mons_with_hero_limit:
+                    for mon_name in mon_list:
+                        remove_mons_list = []
+                        mon_index_list = []
+
+                        for mon_index in mon_list[mon_name]:
+                            mon_index
+
+                        for mon_index in mon_list[mon_name]:
+                            
+                            now_append_mon = self.castle.mons_in_castle_list[mon_name][mon_index_list[mon_index]]
+                            remove_mons_list.append(now_append_mon)
+                            self.castle.mons_with_hero_list[mon_name].append(now_append_mon)
+                        
+                        for mon in remove_mons_list: 
+                            self.castle.mons_in_castle_list[mon_name].remove(mon)
+                else:
+                    print()
+                    print('Вы выбрали слишком много монстров!')
+                    print(f'Лимит монстров: {mons_with_hero_limit}.')
             else:
-                print()
-                print('Вы выбрали слишком много монстров!')
-                print(f'Лимит монстров: {monsters_with_hero_limit}.')
-        else:
-                print()
-                print('С вами уже максимум монстров!')
-                print(f'Лимит монстров: {monsters_with_hero_limit}.')
-                
-                
-    def send_monsters_to_castle(self, **monster_list)-> list:
-        '''
-        **monster принимает ...
-        '''
-        for monster_name in monster_list:
-            remove_monsters_list = []
-            for monster_index in monster_list[monster_name]: 
-                now_append_monster = self.castle.monsters_with_hero_list[monster_name][monster_index]
-                remove_monsters_list.append(now_append_monster)
-                self.castle.monsters_in_castle_list[monster_name].append(now_append_monster)
-                
-            for monster in remove_monsters_list: 
-                self.castle.monsters_with_hero_list[monster_name].remove(monster)
+                    print()
+                    print('С вами уже максимум монстров!')
+                    print(f'Лимит монстров: {mons_with_hero_limit}.')
+
+        elif group == 'all':
+            pass
+
+
+                    
+                    
+        def send_monsters_to_castle(self, **mon_list)-> list:
+            '''
+            **mon принимает ...
+            '''
+            for mon_name in mon_list:
+                remove_mons_list = []
+                for mon_index in mon_list[mon_name]: 
+                    now_append_mon = self.castle.mons_with_hero_list[mon_name][mon_index]
+                    remove_mons_list.append(now_append_mon)
+                    self.castle.mons_in_castle_list[mon_name].append(now_append_mon)
+                    
+                for mon in remove_mons_list: 
+                    self.castle.mons_with_hero_list[mon_name].remove(mon)
 
              
                 
@@ -161,72 +179,72 @@ class Hero:
                 enemy = creature
                 
 
-        enemy_monster_list = []
-        for monster_list in enemy.npc_monster_list:
-            for monster in enemy.npc_monster_list[monster_list]:
-                enemy_monster_list.append(monster)
+        enemy_mon_list = []
+        for mon_list in enemy.npc_mon_list:
+            for mon in enemy.npc_mon_list[mon_list]:
+                enemy_mon_list.append(mon)
 
-        hero_monster_list = []
-        for monster_list in self.castle.monsters_with_hero_list:
-            for monster in self.castle.monsters_with_hero_list[monster_list]:
-                hero_monster_list.append(monster)
+        hero_mon_list = []
+        for mon_list in self.castle.mons_with_hero_list:
+            for mon in self.castle.mons_with_hero_list[mon_list]:
+                hero_mon_list.append(mon)
 
 
         while True:
              
             
-            if len(hero_monster_list) == 0 and len(enemy_monster_list) == 0:
+            if len(hero_mon_list) == 0 and len(enemy_mon_list) == 0:
                 time.sleep(1)
                 result = 'НИЧЬЯ'
                 break
-            elif len(enemy_monster_list) == 0:
-                hero_monster = hero_monster_list[0]
+            elif len(enemy_mon_list) == 0:
+                hero_mon = hero_mon_list[0]
                 time.sleep(1)
                 print('---ВСЕ МОНСТРЫ ВРАГА УМЕРЛИ!---')
                 while enemy.hp > 0:
                     time.sleep(0.45)
-                    print(f'{hero_monster.name}: {hero_monster.hp} --> {enemy.name}: {enemy.hp}')
-                    enemy.hp -= hero_monster.dmc
+                    print(f'{hero_mon.name}: {hero_mon.hp} --> {enemy.name}: {enemy.hp}')
+                    enemy.hp -= hero_mon.dmc
                 result = 'ВЫ ВЫИГРАЛИ'
                 break
-            elif len(hero_monster_list) == 0:
-                enemy_monster = enemy_monster_list[0]
+            elif len(hero_mon_list) == 0:
+                enemy_mon = enemy_mon_list[0]
                 time.sleep(1)
                 print('---ВСЕ ВАШИ МОНСТРЫ УМЕРЛИ!----')
                 while self.hp > 0:
                     time.sleep(0.45)
-                    print(f'ВАШ ГЕРОЙ: {self.hp} <-- {enemy_monster.name}: {enemy_monster.hp}')
-                    self.hp -= enemy_monster.dmc
+                    print(f'ВАШ ГЕРОЙ: {self.hp} <-- {enemy_mon.name}: {enemy_mon.hp}')
+                    self.hp -= enemy_mon.dmc
                 result = 'ВЫ ПРОИГРАЛИ'
                 break
                 
 
 
-            enemy_monster = enemy_monster_list[0]
-            hero_monster = hero_monster_list[0]
-            while (enemy_monster.hp > 0 and hero_monster.hp > 0):
+            enemy_mon = enemy_mon_list[0]
+            hero_mon = hero_mon_list[0]
+            while (enemy_mon.hp > 0 and hero_mon.hp > 0):
                 time.sleep(0.35)
-                print(f'{hero_monster.name}: {hero_monster.hp} VS {enemy_monster.name}: {enemy_monster.hp}')
-                hero_monster.hp -= enemy_monster.dmc
-                enemy_monster.hp -= hero_monster.dmc
+                print(f'{hero_mon.name}: {hero_mon.hp} VS {enemy_mon.name}: {enemy_mon.hp}')
+                hero_mon.hp -= enemy_mon.dmc
+                enemy_mon.hp -= hero_mon.dmc
 
 
-            if hero_monster.hp <= 0 and enemy_monster.hp <= 0:
-                enemy_monster_list.remove(enemy_monster)
-                hero_monster_list.remove(hero_monster)
-            elif enemy_monster.hp <= 0:
-                enemy_monster_list.remove(enemy_monster)
-            elif hero_monster.hp <= 0:
-                hero_monster_list.remove(hero_monster)
+            if hero_mon.hp <= 0 and enemy_mon.hp <= 0:
+                enemy_mon_list.remove(enemy_mon)
+                hero_mon_list.remove(hero_mon)
+            elif enemy_mon.hp <= 0:
+                enemy_mon_list.remove(enemy_mon)
+            elif hero_mon.hp <= 0:
+                hero_mon_list.remove(hero_mon)
 
         
-        for monster in enemy_monster_list:
-            monster_name = monster.name.split('_')[0]
-            enemy.npc_monster_list[monster_name].append(monster)
+        for mon in enemy_mon_list:
+            mon_name = mon.name.split('_')[0]
+            enemy.npc_mon_list[mon_name].append(mon)
 
-        for monster in hero_monster_list:
-            monster_name = monster.name.split('_')[0]
-            self.castle.monsters_with_hero_list[monster_name].append(monster)
+        for mon in hero_mon_list:
+            mon_name = mon.name.split('_')[0]
+            self.castle.mons_with_hero_list[mon_name].append(mon)
 
 
         time.sleep(3)
