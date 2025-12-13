@@ -7,7 +7,7 @@ import json
 
 class Hero:
 
-    def __init__(self, castle, map):
+    def __init__(self, castle, fig = ''):
         self.hero_color = castle.castle_color
         self.hp = 1500
         self.castle = castle
