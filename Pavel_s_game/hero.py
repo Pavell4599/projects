@@ -28,10 +28,20 @@ class Hero:
         
     def go_outside(self):
         self.castle.hero_position = 'outside'
+        print('Вы вошли в замок')
 
 
-    def go_inside(self):
+    def go_inside(self, group = ''):
+        '''
+        виды параметра group:
+          group = 'all' -> когда вы возвращаетесь в замок, 
+          то все монстры автоматически уходят из вашего списка
+        '''
         self.castle.hero_position = 'inside'
+        print()
+        print('Вы вышли из замка')
+        if group == 'all':
+            self.send_monsters_to_castle(group = 'all')
 
 
     def check_hero_hp(self):
@@ -122,9 +132,9 @@ class Hero:
     def take_monsters_from_castle(self, group = '', **mon_list)-> list:
         '''
         виды параметра group:
-          all -> берете всех монстров из замка к себе, если их меньше лимита
-          all_random_(count) -> берете (count) рандомных монстров из замка
-          all_(count) -> берете (count) первых монстров из замка
+          group = 'all' -> берете всех монстров из замка к себе, если их меньше лимита
+          group = all_random_(count) -> берете (count) рандомных монстров из замка
+          group = (count) -> берете (count) первых монстров из замка
         '''
         mons_with_hero_len = 0
         for mon_name in self.castle.mons_with_hero_list:
@@ -183,7 +193,7 @@ class Hero:
                         for mon_name in self.castle.mons_in_castle_list:
                             for mon in self.castle.mons_in_castle_list[mon_name]:
                                 remove_mons_list.append(mon)
-                        print(remove_mons_list)
+                        
                         for i in range(mon_count):
 
                             now_append_mon = remove_mons_list[i]
@@ -235,9 +245,9 @@ class Hero:
                 print()
                 print('Параметр group введен некорректно')
                 print('Подсказка:')
-                print('  group=\'all\' -> отправляете всех монстров в замок')
-                print('  group=\'random_(count)\' -> берете (count) рандомных монстров из замка')
-                print('  group=(count) -> берете (count) монстров из замка по порядку')
+                print('  group = \'all\' -> отправляете всех монстров в замок')
+                print('  group = \'random_(count)\' -> берете (count) рандомных монстров из замка')
+                print('  group = (count) -> берете (count) монстров из замка по порядку')
         
         else:
             print()
@@ -249,7 +259,7 @@ class Hero:
     def send_monsters_to_castle(self, group = '',  **mon_list)-> list:
         '''
         виды параметра group:
-        all -> отправляете всех монстров в замок
+        group = 'all' отправляете всех монстров в замок
         '''
         if group == '':
             for mon_name in mon_list:
@@ -291,13 +301,13 @@ class Hero:
             print()
             print('Параметр group введен некорректно')
             print('Подсказка:')
-            print('  group=all -> отправляете всех монстров в замок')
+            print('  group = \'all\' -> отправляете всех монстров в замок')
 
              
                 
     def atack(self, enemy_name: str, order = ''):
         '''
-        order='random' -> монстры выходят на сражение в случайном порядке
+        order = 'random' -> монстры выходят на сражение в случайном порядке
         '''
         if order == '':
 
@@ -318,7 +328,7 @@ class Hero:
             print()
             print('Параметр order введен некорректно')
             print('Подсказка:')
-            print('  order=\'random\' -> монстры выходят на сражение в случайном порядке')
+            print('  order = \'random\' -> монстры выходят на сражение в случайном порядке')
             return ''
 
 
@@ -400,5 +410,36 @@ class Hero:
 
         time.sleep(3)
         print(f'|-------------> {result} <-------------|')
+
+
+    def randomize(self, target: str):
+        '''
+        виды параметра target:
+        target='all' -> перемешивание монстров только в замке и у героя
+        target='hero'  -> перемешивание монстров только у героя
+        target='castle' -> перемешивание монстров только в замке
+        '''
+        if target == 'all':
+            for mon_name in self.castle.mons_in_castle_list:
+                        rd.shuffle(self.castle.mons_in_castle_list[mon_name])
+            for mon_name in self.castle.mons_with_hero_list:
+                        rd.shuffle(self.castle.mons_with_hero_list[mon_name])
+
+        elif target == 'hero':
+            for mon_name in self.castle.mons_with_hero_list:
+                        rd.shuffle(self.castle.mons_with_hero_list[mon_name])
+
+        elif target == 'castle':
+            for mon_name in self.castle.mons_in_castle_list:
+                        rd.shuffle(self.castle.mons_in_castle_list[mon_name])
+        
+        else:
+            print()
+            print('Параметр target введен некорректно')
+            print('Подсказка:')
+            print('  target=\'all\' -> перемешивание монстров только в замке и у героя')
+            print('  target=\'hero\'  -> перемешивание монстров только у героя')
+            print('  target=\'castle\' -> перемешивание монстров только в замке')
+
 
 
