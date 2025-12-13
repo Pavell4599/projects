@@ -1,0 +1,689 @@
+{
+  "castle_mon": {
+    "General": [],
+    "Skeleton": [],
+    "Pig": [
+      {
+        "name": "Pig 10",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 16",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 19",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 12",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 17",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 9",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 5",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 15",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 6",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 18",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 13",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 1",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 8",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 14",
+        "hp": 750,
+        "dmc": 30
+      }
+    ],
+    "Helicopter": [],
+    "Foodman": [
+      {
+        "name": "Foodman 9",
+        "hp": 600,
+        "dmc": 10
+      },
+      {
+        "name": "Foodman 0",
+        "hp": 600,
+        "dmc": 10
+      },
+      {
+        "name": "Foodman 8",
+        "hp": 600,
+        "dmc": 10
+      },
+      {
+        "name": "Foodman 3",
+        "hp": 600,
+        "dmc": 10
+      },
+      {
+        "name": "Foodman 2",
+        "hp": 600,
+        "dmc": 10
+      },
+      {
+        "name": "Foodman 7",
+        "hp": 600,
+        "dmc": 10
+      },
+      {
+        "name": "Foodman 6",
+        "hp": 600,
+        "dmc": 10
+      },
+      {
+        "name": "Foodman 1",
+        "hp": 600,
+        "dmc": 10
+      },
+      {
+        "name": "Foodman 4",
+        "hp": 600,
+        "dmc": 10
+      },
+      {
+        "name": "Foodman 5",
+        "hp": 600,
+        "dmc": 10
+      }
+    ]
+  },
+  "hero_mon": {
+    "General": [],
+    "Skeleton": [],
+    "Pig": [
+      {
+        "name": "Pig 0",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 2",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 3",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 4",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 7",
+        "hp": 750,
+        "dmc": 30
+      },
+      {
+        "name": "Pig 11",
+        "hp": 750,
+        "dmc": 30
+      }
+    ],
+    "Helicopter": [],
+    "Foodman": []
+  },
+  "npcs": {
+    "Фермер": [
+      {
+        "name": "Фермер 0",
+        "hp": 875,
+        "npc_mon_list": {
+          "General": [
+            {
+              "name": "General 0",
+              "hp": 500,
+              "dmc": 50
+            },
+            {
+              "name": "General 1",
+              "hp": 500,
+              "dmc": 50
+            }
+          ],
+          "Skeleton": [
+            {
+              "name": "Skeleton 0",
+              "hp": 200,
+              "dmc": 25
+            },
+            {
+              "name": "Skeleton 1",
+              "hp": 200,
+              "dmc": 25
+            },
+            {
+              "name": "Skeleton 2",
+              "hp": 200,
+              "dmc": 25
+            }
+          ],
+          "Pig": [
+            {
+              "name": "Pig 0",
+              "hp": 750,
+              "dmc": 30
+            }
+          ],
+          "Helicopter": [
+            {
+              "name": "Helicopter 0",
+              "hp": 1000,
+              "dmc": 200
+            },
+            {
+              "name": "Helicopter 1",
+              "hp": 1000,
+              "dmc": 200
+            },
+            {
+              "name": "Helicopter 2",
+              "hp": 1000,
+              "dmc": 200
+            }
+          ],
+          "Foodman": [
+            {
+              "name": "Foodman 0",
+              "hp": 600,
+              "dmc": 10
+            },
+            {
+              "name": "Foodman 1",
+              "hp": 600,
+              "dmc": 10
+            },
+            {
+              "name": "Foodman 2",
+              "hp": 600,
+              "dmc": 10
+            }
+          ]
+        }
+      },
+      {
+        "name": "Фермер 1",
+        "hp": 850,
+        "npc_mon_list": {
+          "General": [
+            {
+              "name": "General 0",
+              "hp": 500,
+              "dmc": 50
+            }
+          ],
+          "Skeleton": [
+            {
+              "name": "Skeleton 0",
+              "hp": 200,
+              "dmc": 25
+            },
+            {
+              "name": "Skeleton 1",
+              "hp": 200,
+              "dmc": 25
+            }
+          ],
+          "Pig": [
+            {
+              "name": "Pig 0",
+              "hp": 750,
+              "dmc": 30
+            }
+          ],
+          "Helicopter": [
+            {
+              "name": "Helicopter 0",
+              "hp": 1000,
+              "dmc": 200
+            },
+            {
+              "name": "Helicopter 1",
+              "hp": 1000,
+              "dmc": 200
+            }
+          ],
+          "Foodman": [
+            {
+              "name": "Foodman 0",
+              "hp": 600,
+              "dmc": 10
+            },
+            {
+              "name": "Foodman 1",
+              "hp": 600,
+              "dmc": 10
+            }
+          ]
+        }
+      }
+    ],
+    "Боярин": [
+      {
+        "name": "Боярин 0",
+        "hp": 575,
+        "npc_mon_list": {
+          "General": [
+            {
+              "name": "General 0",
+              "hp": 500,
+              "dmc": 50
+            },
+            {
+              "name": "General 1",
+              "hp": 500,
+              "dmc": 50
+            },
+            {
+              "name": "General 2",
+              "hp": 500,
+              "dmc": 50
+            }
+          ],
+          "Skeleton": [
+            {
+              "name": "Skeleton 0",
+              "hp": 200,
+              "dmc": 25
+            },
+            {
+              "name": "Skeleton 1",
+              "hp": 200,
+              "dmc": 25
+            },
+            {
+              "name": "Skeleton 2",
+              "hp": 200,
+              "dmc": 25
+            }
+          ],
+          "Pig": [
+            {
+              "name": "Pig 0",
+              "hp": 750,
+              "dmc": 30
+            },
+            {
+              "name": "Pig 1",
+              "hp": 750,
+              "dmc": 30
+            },
+            {
+              "name": "Pig 2",
+              "hp": 750,
+              "dmc": 30
+            }
+          ],
+          "Helicopter": [
+            {
+              "name": "Helicopter 0",
+              "hp": 1000,
+              "dmc": 200
+            }
+          ],
+          "Foodman": [
+            {
+              "name": "Foodman 0",
+              "hp": 600,
+              "dmc": 10
+            },
+            {
+              "name": "Foodman 1",
+              "hp": 600,
+              "dmc": 10
+            }
+          ]
+        }
+      },
+      {
+        "name": "Боярин 1",
+        "hp": 575,
+        "npc_mon_list": {
+          "General": [
+            {
+              "name": "General 0",
+              "hp": 500,
+              "dmc": 50
+            }
+          ],
+          "Skeleton": [
+            {
+              "name": "Skeleton 0",
+              "hp": 200,
+              "dmc": 25
+            },
+            {
+              "name": "Skeleton 1",
+              "hp": 200,
+              "dmc": 25
+            }
+          ],
+          "Pig": [
+            {
+              "name": "Pig 0",
+              "hp": 750,
+              "dmc": 30
+            }
+          ],
+          "Helicopter": [
+            {
+              "name": "Helicopter 0",
+              "hp": 1000,
+              "dmc": 200
+            },
+            {
+              "name": "Helicopter 1",
+              "hp": 1000,
+              "dmc": 200
+            }
+          ],
+          "Foodman": [
+            {
+              "name": "Foodman 0",
+              "hp": 600,
+              "dmc": 10
+            },
+            {
+              "name": "Foodman 1",
+              "hp": 600,
+              "dmc": 10
+            },
+            {
+              "name": "Foodman 2",
+              "hp": 600,
+              "dmc": 10
+            }
+          ]
+        }
+      }
+    ],
+    "Казак": [
+      {
+        "name": "Казак 0",
+        "hp": 550,
+        "npc_mon_list": {
+          "General": [
+            {
+              "name": "General 0",
+              "hp": 500,
+              "dmc": 50
+            }
+          ],
+          "Skeleton": [
+            {
+              "name": "Skeleton 0",
+              "hp": 200,
+              "dmc": 25
+            },
+            {
+              "name": "Skeleton 1",
+              "hp": 200,
+              "dmc": 25
+            },
+            {
+              "name": "Skeleton 2",
+              "hp": 200,
+              "dmc": 25
+            }
+          ],
+          "Pig": [
+            {
+              "name": "Pig 0",
+              "hp": 750,
+              "dmc": 30
+            },
+            {
+              "name": "Pig 1",
+              "hp": 750,
+              "dmc": 30
+            }
+          ],
+          "Helicopter": [
+            {
+              "name": "Helicopter 0",
+              "hp": 1000,
+              "dmc": 200
+            },
+            {
+              "name": "Helicopter 1",
+              "hp": 1000,
+              "dmc": 200
+            }
+          ],
+          "Foodman": [
+            {
+              "name": "Foodman 0",
+              "hp": 600,
+              "dmc": 10
+            },
+            {
+              "name": "Foodman 1",
+              "hp": 600,
+              "dmc": 10
+            }
+          ]
+        }
+      }
+    ],
+    "Мушкетёр": [
+      {
+        "name": "Мушкетёр 0",
+        "hp": 650,
+        "npc_mon_list": {
+          "General": [
+            {
+              "name": "General 0",
+              "hp": 500,
+              "dmc": 50
+            }
+          ],
+          "Skeleton": [
+            {
+              "name": "Skeleton 0",
+              "hp": 200,
+              "dmc": 25
+            },
+            {
+              "name": "Skeleton 1",
+              "hp": 200,
+              "dmc": 25
+            },
+            {
+              "name": "Skeleton 2",
+              "hp": 200,
+              "dmc": 25
+            }
+          ],
+          "Pig": [
+            {
+              "name": "Pig 0",
+              "hp": 750,
+              "dmc": 30
+            }
+          ],
+          "Helicopter": [
+            {
+              "name": "Helicopter 0",
+              "hp": 1000,
+              "dmc": 200
+            },
+            {
+              "name": "Helicopter 1",
+              "hp": 1000,
+              "dmc": 200
+            }
+          ],
+          "Foodman": [
+            {
+              "name": "Foodman 0",
+              "hp": 600,
+              "dmc": 10
+            }
+          ]
+        }
+      },
+      {
+        "name": "Мушкетёр 1",
+        "hp": 525,
+        "npc_mon_list": {
+          "General": [
+            {
+              "name": "General 0",
+              "hp": 500,
+              "dmc": 50
+            }
+          ],
+          "Skeleton": [
+            {
+              "name": "Skeleton 0",
+              "hp": 200,
+              "dmc": 25
+            },
+            {
+              "name": "Skeleton 1",
+              "hp": 200,
+              "dmc": 25
+            },
+            {
+              "name": "Skeleton 2",
+              "hp": 200,
+              "dmc": 25
+            }
+          ],
+          "Pig": [
+            {
+              "name": "Pig 0",
+              "hp": 750,
+              "dmc": 30
+            }
+          ],
+          "Helicopter": [
+            {
+              "name": "Helicopter 0",
+              "hp": 1000,
+              "dmc": 200
+            },
+            {
+              "name": "Helicopter 1",
+              "hp": 1000,
+              "dmc": 200
+            }
+          ],
+          "Foodman": [
+            {
+              "name": "Foodman 0",
+              "hp": 600,
+              "dmc": 10
+            }
+          ]
+        }
+      }
+    ],
+    "Горожанин": [
+      {
+        "name": "Горожанин 0",
+        "hp": 425,
+        "npc_mon_list": {
+          "General": [
+            {
+              "name": "General 0",
+              "hp": 500,
+              "dmc": 50
+            },
+            {
+              "name": "General 1",
+              "hp": 500,
+              "dmc": 50
+            }
+          ],
+          "Skeleton": [
+            {
+              "name": "Skeleton 0",
+              "hp": 200,
+              "dmc": 25
+            }
+          ],
+          "Pig": [
+            {
+              "name": "Pig 0",
+              "hp": 750,
+              "dmc": 30
+            }
+          ],
+          "Helicopter": [
+            {
+              "name": "Helicopter 0",
+              "hp": 1000,
+              "dmc": 200
+            },
+            {
+              "name": "Helicopter 1",
+              "hp": 1000,
+              "dmc": 200
+            },
+            {
+              "name": "Helicopter 2",
+              "hp": 1000,
+              "dmc": 200
+            }
+          ],
+          "Foodman": [
+            {
+              "name": "Foodman 0",
+              "hp": 600,
+              "dmc": 10
+            },
+            {
+              "name": "Foodman 1",
+              "hp": 600,
+              "dmc": 10
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

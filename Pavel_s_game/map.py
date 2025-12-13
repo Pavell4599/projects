@@ -4,7 +4,7 @@ import random as rd
 
 class Map:
 
-    def __init__(self, map_name):
+    def __init__(self, map_name, fig = ''):
         self.map_name = map_name
         self.npcs_list = {'Фермер': [], 'Боярин': [], 'Казак': [], 'Мушкетёр': [], 'Горожанин': []}
 

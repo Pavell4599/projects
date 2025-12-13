@@ -2,6 +2,7 @@ from npc import NPC
 from map import Map
 import random as rd
 import time
+import json
 
 
 class Hero:
@@ -151,7 +152,7 @@ class Hero:
                 is_limit = mons_with_hero_len
                 for mon_name in mon_list:
                     is_limit += len(mon_list[mon_name])
-                if is_limit <= self.mons_with_hero_limit:
+                if is_limit <= self.mons_with_hero_limit:  
                     for mon_name in mon_list:
                         remove_mons_list = []
                         mon_index_list = []
@@ -254,7 +255,6 @@ class Hero:
             print('С вами уже максимум монстров!')
             print(f'Лимит монстров: {self.mons_with_hero_limit}.')  
 
-
           
     def send_monsters_to_castle(self, group = '',  **mon_list)-> list:
         '''
@@ -303,8 +303,7 @@ class Hero:
             print('Подсказка:')
             print('  group = \'all\' -> отправляете всех монстров в замок')
 
-             
-                
+                       
     def atack(self, enemy_name: str, order = ''):
         '''
         order = 'random' -> монстры выходят на сражение в случайном порядке
@@ -443,6 +442,69 @@ class Hero:
             print('  target=\'all\' -> перемешивание монстров только в замке и у героя')
             print('  target=\'hero\'  -> перемешивание монстров только у героя')
             print('  target=\'castle\' -> перемешивание монстров только в замке')
+            
+            
+    def save_fig(self):
+        hero_mon = self.castle.mons_with_hero_list
+        castle_mon = self.castle.mons_in_castle_list
+        npcs = self.map.npcs_list
+        
+        for mon_name in hero_mon:
+            for i in range(len(hero_mon[mon_name])):
+                mon = hero_mon[mon_name][i]
+                new_mon = {}
+                new_mon['name'] = mon.name
+                new_mon['hp'] = mon.hp
+                new_mon['dmc'] = mon.dmc
+                hero_mon[mon_name][i] = new_mon
+                
+        for mon_name in castle_mon:
+            for i in range(len(castle_mon[mon_name])):
+                mon = castle_mon[mon_name][i]
+                new_mon = {}
+                new_mon['name'] = mon.name
+                new_mon['hp'] = mon.hp
+                new_mon['dmc'] = mon.dmc
+                castle_mon[mon_name][i] = new_mon
+        
+        for npc_name in npcs:
+            for j in range(len(npcs[npc_name])):
+            
+                npc = npcs[npc_name][j]
+                new_npc = {}
+                new_npc['name'] = npc.name
+                new_npc['hp'] = npc.hp
+                npc_mon = npc.npc_mon_list
+                for mon_name in npc_mon:
+                    for i in range(len(npc_mon[mon_name])):
+                        mon = npc_mon[mon_name][i]
+                        new_mon = {}
+                        new_mon['name'] = mon.name
+                        new_mon['hp'] = mon.hp
+                        new_mon['dmc'] = mon.dmc
+                        npc_mon[mon_name][i] = new_mon
+                
+                new_npc['npc_mon_list'] = npc_mon
+                npcs[npc_name][j] = new_npc
+                
+        data = {'castle_mon': castle_mon,'hero_mon': hero_mon, 'npcs': npcs}
+        with open('actual_data.json', 'w', encoding='utf-8') as file:
+            json.dump(data, file, indent=2, ensure_ascii=False)
+        
+        
+                
+                
+                
+                
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
 
 

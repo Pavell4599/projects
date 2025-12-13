@@ -23,14 +23,12 @@ g.take_monsters_from_castle(Pig=[0,2,3,4,7,11])
 g.check_all_hp()
 # g.go_inside(group = 'all')
 # g.check_all_hp()
-
 # g.send_monsters_to_castle(group = 'all')
-
 # g.check_all_hp()
 # g.check_monster_hp('Helicopter')
+# g.atack('Казак 0')
 
-
-g.atack('Казак 0')
+g.save_fig()
 
 
 
