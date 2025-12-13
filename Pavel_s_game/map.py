@@ -16,7 +16,7 @@ class Map:
         for npc_name in self.npcs_list:
             now_npc_list = self.npcs_list[npc_name]
             for i in range(len(now_npc_list)):
-                now_npc_list[i].name += f'_{str(i)}'
+                now_npc_list[i].name += f' {str(i)}'
         #заполняем список нпс и нумеруем их
 
  

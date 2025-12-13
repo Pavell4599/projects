@@ -298,7 +298,7 @@ class Hero:
                     for mon in remove_mons_list: 
                         self.castle.mons_with_hero_list[mon_name].remove(mon)
         else:
-            print()
+            
             print('Параметр group введен некорректно')
             print('Подсказка:')
             print('  group = \'all\' -> отправляете всех монстров в замок')
@@ -336,7 +336,7 @@ class Hero:
         print()
         result = ''
 
-        enemy_name_in_npcs_list = enemy_name.split('_')[0]
+        enemy_name_in_npcs_list = enemy_name.split(' ')[0]
         enemy_list = self.map.npcs_list[enemy_name_in_npcs_list]
         for creature in enemy_list:
             if creature.name == enemy_name:
@@ -361,6 +361,7 @@ class Hero:
             elif len(enemy_mon_list) == 0:
                 hero_mon = hero_mon_list[0]
                 time.sleep(1)
+                print()
                 print('---ВСЕ МОНСТРЫ ВРАГА УМЕРЛИ!---')
                 while enemy.hp > 0:
                     time.sleep(0.45)
@@ -371,6 +372,7 @@ class Hero:
             elif len(hero_mon_list) == 0:
                 enemy_mon = enemy_mon_list[0]
                 time.sleep(1)
+                print()
                 print('---ВСЕ ВАШИ МОНСТРЫ УМЕРЛИ!----')
                 while self.hp > 0:
                     time.sleep(0.45)
@@ -400,15 +402,16 @@ class Hero:
 
         
         for mon in enemy_mon_list:
-            mon_name = mon.name.split('_')[0]
+            mon_name = mon.name.split(' ')[0]
             enemy.npc_mon_list[mon_name].append(mon)
 
         for mon in hero_mon_list:
-            mon_name = mon.name.split('_')[0]
+            mon_name = mon.name.split(' ')[0]
             self.castle.mons_with_hero_list[mon_name].append(mon)
 
 
         time.sleep(3)
+        print()
         print(f'|-------------> {result} <-------------|')
 
 
