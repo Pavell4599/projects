@@ -1,5 +1,6 @@
 from npc import NPC
 from map import Map
+import random as rd
 import time
 
 
@@ -125,10 +126,19 @@ class Hero:
           all_random_(count) -> берете (count) рандомных монстров из замка
           all_(count) -> берете (count) первых монстров из замка
         '''
-        if group == '':
+        mons_with_hero_len = 0
+        for mon_name in self.castle.mons_with_hero_list:
+            mon_name_list = self.castle.mons_with_hero_list[mon_name]
+            mons_with_hero_len += len(mon_name_list)
+        mons_in_castle_len = 0 
+        for mon_name in self.castle.mons_in_castle_list:
+            mon_name_list = self.castle.mons_in_castle_list[mon_name]
+            mons_in_castle_len += len(mon_name_list)
+        
+        if mons_with_hero_len <= self.mons_with_hero_limit:
 
-            if len(self.castle.mons_with_hero_list) <= self.mons_with_hero_limit:
-                is_limit = len(self.castle.mons_with_hero_list)
+            if group == '':
+                is_limit = mons_with_hero_len
                 for mon_name in mon_list:
                     is_limit += len(mon_list[mon_name])
                 if is_limit <= self.mons_with_hero_limit:
@@ -156,105 +166,183 @@ class Hero:
                         
                         for mon in remove_mons_list: 
                             self.castle.mons_in_castle_list[mon_name].remove(mon)
+                    else:
+                        print()
+                        print('Вы выбрали слишком много монстров!')
+                        print(f'Лимит монстров: {self.mons_with_hero_limit}.')
+                
+            elif str(group).isdigit():
+                mon_count = group
+                is_limit = mon_count + mons_with_hero_len
+
+                if mon_count <= self.mons_with_hero_limit :
+                
+                    if is_limit <= mons_in_castle_len:
+                        remove_mons_list = []
+                        
+                        for mon_name in self.castle.mons_in_castle_list:
+                            for mon in self.castle.mons_in_castle_list[mon_name]:
+                                remove_mons_list.append(mon)
+                        print(remove_mons_list)
+                        for i in range(mon_count):
+
+                            now_append_mon = remove_mons_list[i]
+                            name_stop = str(now_append_mon).find(' ')
+                            mon_name = str(now_append_mon)[10: name_stop]
+                            self.castle.mons_with_hero_list[mon_name].append(now_append_mon)
+                            self.castle.mons_in_castle_list[mon_name].remove(now_append_mon)
+
+                    else:
+                        print()
+                        print(f'Вы не можете выбрать {mon_count} монстров')
+                        print(f'В замке меньше {mon_count} монстров')
                 else:
                     print()
                     print('Вы выбрали слишком много монстров!')
-                    print(f'Лимит монстров: {mons_with_hero_limit}.')
-            else:
+                    print(f'Лимит монстров: {self.mons_with_hero_limit}.')
+
+            elif group[:7] == 'random_' and str(group[7:]).isdigit():
+                mon_count = int(group[7:])
+                is_limit = mon_count + mons_with_hero_len
+
+                if mon_count <= self.mons_with_hero_limit :
+                
+                    if is_limit <= mons_in_castle_len:
+                        remove_mons_list = []
+                        
+                        for mon_name in self.castle.mons_in_castle_list:
+                            for mon in self.castle.mons_in_castle_list[mon_name]:
+                                remove_mons_list.append(mon)
+                        rd.shuffle(remove_mons_list)
+                        for i in range(mon_count):
+
+                            now_append_mon = remove_mons_list[i]
+                            name_stop = str(now_append_mon).find(' ')
+                            mon_name = str(now_append_mon)[10: name_stop]
+                            self.castle.mons_with_hero_list[mon_name].append(now_append_mon)
+                            self.castle.mons_in_castle_list[mon_name].remove(now_append_mon)
+
+                    else:
+                        print()
+                        print(f'Вы не можете выбрать {mon_count} монстров')
+                        print(f'В замке меньше {mon_count} монстров')
+                else:
                     print()
-                    print('С вами уже максимум монстров!')
-                    print(f'Лимит монстров: {mons_with_hero_limit}.')
+                    print('Вы выбрали слишком много монстров!')
+                    print(f'Лимит монстров: {self.mons_with_hero_limit}.')
 
-        elif group == 'all':
-            pass
-
-
-                    
-                    
-        def send_monsters_to_castle(self, group = '',  **mon_list)-> list:
-            '''
-            виды параметра group:
-            all -> отправляете всех монстров в замок
-            '''
-            if group == '':
-                for mon_name in mon_list:
-                        remove_mons_list = []
-                        mon_index_list = []
-
-                        for mon in self.castle.mons_with_hero_list[mon_name]:
-
-                            numb_start = mon.name.index(' ') + 1
-                            mon_name_index = int(mon.name[numb_start:])
-                            mon_index_list.append(mon_name_index)
-
-
-                        for mon_index in mon_list[mon_name]:
-                            try:
-                                append_mon_index = mon_index_list.index(mon_index)
-                            except ValueError:
-                                print()
-                                print(f'{mon_name} {mon_index} нету у героя')
-                                continue
-                            now_append_mon = self.castle.mons_with_hero_list[mon_name][append_mon_index]
-                            remove_mons_list.append(now_append_mon)
-                            self.castle.mons_in_castle_list[mon_name].append(now_append_mon)
-                        
-                        for mon in remove_mons_list: 
-                            self.castle.mons_with_hero_list[mon_name].remove(mon)
-            elif group == 'all':
-                for mon_name in self.mon_list:
-                        remove_mons_list = []
-                        mon_index_list = []
-
-                        for mon in self.castle.mons_with_hero_list[mon_name]:
-
-                            numb_start = mon.name.index(' ') + 1
-                            mon_name_index = int(mon.name[numb_start:])
-                            mon_index_list.append(mon_name_index)
-
-
-                        for mon_index in mon_list[mon_name]:
-                            
-                            now_append_mon = self.castle.mons_with_hero_list[mon_name][mon_index]
-                            remove_mons_list.append(now_append_mon)
-                            self.castle.mons_in_castle_list[mon_name].append(now_append_mon)
-                        
-                        for mon in remove_mons_list: 
-                            self.castle.mons_with_hero_list[mon_name].remove(mon)
             else:
                 print()
                 print('Параметр group введен некорректно')
                 print('Подсказка:')
-                print('  group=all -> отправляете всех монстров в замок')
+                print('  group=\'all\' -> отправляете всех монстров в замок')
+                print('  group=\'random_(count)\' -> берете (count) рандомных монстров из замка')
+                print('  group=(count) -> берете (count) монстров из замка по порядку')
+        
+        else:
+            print()
+            print('С вами уже максимум монстров!')
+            print(f'Лимит монстров: {self.mons_with_hero_limit}.')  
+
+
+          
+    def send_monsters_to_castle(self, group = '',  **mon_list)-> list:
+        '''
+        виды параметра group:
+        all -> отправляете всех монстров в замок
+        '''
+        if group == '':
+            for mon_name in mon_list:
+                    remove_mons_list = []
+                    mon_index_list = []
+
+                    for mon in self.castle.mons_with_hero_list[mon_name]:
+
+                        numb_start = mon.name.index(' ') + 1
+                        mon_name_index = int(mon.name[numb_start:])
+                        mon_index_list.append(mon_name_index)
+
+
+                    for mon_index in mon_list[mon_name]:
+                        try:
+                            append_mon_index = mon_index_list.index(mon_index)
+                        except ValueError:
+                            print()
+                            print(f'{mon_name} {mon_index} нету у героя')
+                            continue
+                        now_append_mon = self.castle.mons_with_hero_list[mon_name][append_mon_index]
+                        remove_mons_list.append(now_append_mon)
+                        self.castle.mons_in_castle_list[mon_name].append(now_append_mon)
+                    
+                    for mon in remove_mons_list: 
+                        self.castle.mons_with_hero_list[mon_name].remove(mon)
+        elif group == 'all':
+            for mon_name in self.castle.mons_with_hero_list:
+                    
+                    remove_mons_list = []
+                    for mon in self.castle.mons_with_hero_list[mon_name]:
+                        now_append_mon = mon
+                        remove_mons_list.append(now_append_mon)
+                        self.castle.mons_in_castle_list[mon_name].append(now_append_mon)
+                    
+                    for mon in remove_mons_list: 
+                        self.castle.mons_with_hero_list[mon_name].remove(mon)
+        else:
+            print()
+            print('Параметр group введен некорректно')
+            print('Подсказка:')
+            print('  group=all -> отправляете всех монстров в замок')
 
              
                 
-    def atack(self, enemy_name: str):
+    def atack(self, enemy_name: str, order = ''):
+        '''
+        order='random' -> монстры выходят на сражение в случайном порядке
+        '''
+        if order == '':
+
+            hero_mon_list = []
+            for mon_list in self.castle.mons_with_hero_list:
+                for mon in self.castle.mons_with_hero_list[mon_list]:
+                    hero_mon_list.append(mon)
+
+        elif order == 'random':
+            
+            hero_mon_list = []
+            for mon_list in self.castle.mons_with_hero_list:
+                for mon in self.castle.mons_with_hero_list[mon_list]:
+                    hero_mon_list.append(mon)
+            rd.shuffle(hero_mon_list)
+
+        else:
+            print()
+            print('Параметр order введен некорректно')
+            print('Подсказка:')
+            print('  order=\'random\' -> монстры выходят на сражение в случайном порядке')
+            return ''
+
+
+
         print()
         result = ''
-
-
 
         enemy_name_in_npcs_list = enemy_name.split('_')[0]
         enemy_list = self.map.npcs_list[enemy_name_in_npcs_list]
         for creature in enemy_list:
             if creature.name == enemy_name:
                 enemy = creature
-                
 
+        enemy_mon_order = rd.choice(['random', 'by_order'])        
         enemy_mon_list = []
         for mon_list in enemy.npc_mon_list:
             for mon in enemy.npc_mon_list[mon_list]:
                 enemy_mon_list.append(mon)
-
-        hero_mon_list = []
-        for mon_list in self.castle.mons_with_hero_list:
-            for mon in self.castle.mons_with_hero_list[mon_list]:
-                hero_mon_list.append(mon)
+        if enemy_mon_order == 'random':
+            rd.shuffle(enemy_mon_list)
 
 
         while True:
-             
+            
             
             if len(hero_mon_list) == 0 and len(enemy_mon_list) == 0:
                 time.sleep(1)
@@ -312,14 +400,5 @@ class Hero:
 
         time.sleep(3)
         print(f'|-------------> {result} <-------------|')
-
-
-        
-
-        
-
-
-if __name__ == '__main__':
-    pass
 
 

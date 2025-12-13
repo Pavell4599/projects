@@ -12,16 +12,21 @@ g = Hero(dragon_castle, map_1)
 
 
 
-g.castle.create_monster('Helicopter', 10)
+g.castle.create_monster('Pig', 20)
+g.castle.create_monster('Foodman',10)
 
 # g.check_map()
-g.take_monsters_from_castle(Helicopter=[0,1])
-g.take_monsters_from_castle(Helicopter=[7,8,11])
-g.send_monsters_to_castle(Helicopter=[0,1])
-
+# g.take_monsters_from_castle(Pig=[0,2,3,4,7,11])
+g.take_monsters_from_castle(group = 'random_10')
 g.check_all_hp()
-g.check_monster_hp('Helicopter')
-# g.atack('Фермер_0')
+
+# g.send_monsters_to_castle(group = 'all')
+
+# g.check_all_hp()
+# g.check_monster_hp('Helicopter')
+g.atack('Фермер_0', order = 'random')
+
+
 
 
 
