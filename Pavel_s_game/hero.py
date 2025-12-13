@@ -29,7 +29,7 @@ class Hero:
         
     def go_outside(self):
         self.castle.hero_position = 'outside'
-        print('Вы вошли в замок')
+        print('Вы вышли из замка')
 
 
     def go_inside(self, group = ''):
@@ -40,7 +40,7 @@ class Hero:
         '''
         self.castle.hero_position = 'inside'
         print()
-        print('Вы вышли из замка')
+        print('Вы вошли в замок')
         if group == 'all':
             self.send_monsters_to_castle(group = 'all')
 
