@@ -7,7 +7,7 @@ import json
 
 class Hero:
 
-    def __init__(self, castle, fig = ''):
+    def __init__(self, castle, map):
         self.hero_color = castle.castle_color
         self.hp = 1500
         self.castle = castle
@@ -29,6 +29,7 @@ class Hero:
         
     def go_outside(self):
         self.castle.hero_position = 'outside'
+        print()
         print('Вы вышли из замка')
 
 
@@ -490,6 +491,8 @@ class Hero:
         data = {'castle_mon': castle_mon,'hero_mon': hero_mon, 'npcs': npcs}
         with open('actual_data.json', 'w', encoding='utf-8') as file:
             json.dump(data, file, indent=2, ensure_ascii=False)
+        print()
+        print('ПРОГРЕСС СОХРАНЁН')
         
         
                 

@@ -4,7 +4,7 @@ from monsters import General, Skeleton, Pig, Helicopter, Foodman
 
 class Castle:
 
-    def __init__(self, player, fig = ''):
+    def __init__(self, player):
         self.player = player
         self.hp = 1000000
         self.castle_color = self.player.player_color
