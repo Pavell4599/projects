@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>VEGA CITY: PAVEL EDITION</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0a0a1a;
+      color: #ffffff;
+    }
+    #gameContainer {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #gameCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #ui {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+    #player {
+      position: absolute;
+      font-size: 40px;
+      z-index: 20;
+      transition: transform 0.1s ease;
+      text-shadow: 0 0 10px rgba(0, 200, 255, 0.8);
+    }
+    #minimap {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 150px;
+      height: 150px;
+      background: rgba(0, 20, 40, 0.8);
+      border: 2px solid #00aaff;
+      border-radius: 8px;
+      pointer-events: auto;
+      z-index: 30;
+      overflow: hidden;
+    }
+    .minimap-player {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #00ffaa;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .minimap-object {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: #ff6b6b;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+    #chat {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 350px;
+      height: 180px;
+      background: rgba(0, 20, 40, 0.85);
+      border: 1px solid #00aaff;
+      color: #00ffaa;
+      padding: 10px;
+      font-family: 'Consolas', monospace;
+      overflow-y: auto;
+      pointer-events: auto;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+    }
+    .chat-message {
+      margin: 4px 0;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .chat-system {
+      color: #ffaa00;
+    }
+    .chat-user {
+      color: #00aaff;
+    }
+    #controls {
+      position: absolute;
+      bottom: 200px;
+      left: 20px;
+      background: rgba(0, 20, 40, 0.8);
+      border: 1px solid #00aaff;
+      border-radius: 8px;
+      padding: 15px;
+      pointer-events: auto;
+      z-index: 30;
+      min-width: 200px;
+    }
+    .control-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      background: linear-gradient(45deg, #0066cc, #00aaff);
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .control-btn:hover {
+      background: linear-gradient(45deg, #00aaff, #00ffcc);
+      transform: translateY(-2px);
+    }
+    #stats {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 20, 40, 0.8);
+      border: 1px solid #00aaff;
+      border-radius: 8px;
+      padding: 15px;
+      pointer-events: auto;
+      z-index: 30;
+      min-width: 200px;
+    }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    .stat-label {
+      color: #aaaaaa;
+    }
+      .stat-value {
+      color: #00ffaa;
+      font-weight: bold;
+    }
+    #loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0a0a1a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .loading-text {
+      font-size: 24px;
+      color: #00aaff;
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      width: 300px;
+      height: 8px;
+      background: #1a1a3a;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0066cc, #00aaff);
+      width: 0%;
+      transition: width 0.3s;
+    }
+    #crosshair {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      pointer-events: none;
+      z-index: 40;
+      color: #00ffaa;
+      font-size: 20px;
+      opacity: 0.7;
+    }
+    .building {
+      position: absolute;
+      border: 1px solid #333;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .health-bar {
+      position: absolute;
+      width: 40px;
+      height: 4px;
+      background: #333;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .health-fill {
+      height: 100%;
+      background: #00ff00;
+      transition: width 0.3s;
+    }
+    #vehicle-ui {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 20, 40, 0.8);
+      border: 1px solid #00aaff;
+      border-radius: 8px;
+      padding: 10px;
+      pointer-events: auto;
+      z-index: 30;
+      display: none;
+    }
+    .vehicle-stat {
+      margin: 3px 0;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div id="gameContainer">
+    <div id="loading">
+      <div class="loading-text">Загрузка VEGA CITY...</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <div id="ui">
+      <div id="player">👤</div>
+      
+      <div id="stats">
+        <div class="stat-row">
+          <span class="stat-label">Здоровье:</span>
+          <span class="stat-value" id="health">100</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Броня:</span>
+          <span class="stat-value" id="armor">100</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Деньги:</span>
+          <span class="stat-value" id="money">5000</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Уровень:</span>
+          <span class="stat-value" id="level">1</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Опыт:</span>
+          <span class="stat-value" id="exp">0/100</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Убийства:</span>
+          <span class="stat-value" id="kills">0</span>
+        </div>
+      </div>
+
+      <div id="minimap">
+        <!-- Мини-карта будет заполняться скриптом -->
+      </div>
+
+      <div id="chat">
+        <div class="chat-message chat-system">[СИСТЕМА] Добро пожаловать в VEGA CITY!</div>
+        <div class="chat-message chat-user">[ПАВЕЛ] Готов к новым вызовам!</div>
+      </div>
+
+      <div id="controls">
+        <button class="control-btn" onclick="toggleVehicle()">Сесть в транспорт</button>
+        <button class="control-btn" onclick="useHeal()">Аптечка</button>
+        <button class="control-btn" onclick="openShop()">Магазин</button>
+        <button class="control-btn" onclick="callPolice()">Вызов полиции</button>
+        <button class="control-btn" onclick="toggleNightVision()">Ночное видение</button>
+      </div>
+
+      <div id="vehicle-ui">
+        <div class="vehicle-stat">Тип: <span id="vehicleType">-</span></div>
+        <div class="vehicle-stat">Топливо: <span id="fuelLevel">100%</span></div>
+        <div class="vehicle-stat">Скорость: <span id="vehicleSpeed">0 км/ч</span></div>
+      </div>
+
+      <div id="crosshair">+</div>
+    </div>
+  </div>
+
+  <script>
+    // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let player = {
+      x: 0, y: 0, 
+      health: 100, 
+      armor: 100, 
+      money: 5000, 
+      level: 1, 
+      exp: 0, 
+      kills: 0, 
+      killsRequired: 5,
+      speed: 3,
+      weapon: 'pistol',
+      inVehicle: false,
+      vehicle: null,
+      nightVision: false
+    };
+    let world = {
+      buildings: [],
+      npcs: [],
+      vehicles: [],
+      items: []
+    };
+    let camera = { x: 0, y: 0 };
+    let keys = {};
+    let mousePos = { x: 0, y: 0 };
+    let lastUpdate = 0;
+    let deltaTime = 0;
+
+    // === ИНИЦИАЛИЗАЦИЯ ===
+    function init() {
+      resize();
+      window.addEventListener('resize', resize);
+      
+      // Управление
+      document.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
+      document.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+      canvas.addEventListener('mousemove', handleMouseMove);
+      canvas.addEventListener('click', handleClick);
+      
+      // Генерация мира
+      generateWorld();
+      
+      // Анимация загрузки
+      animateLoading();
+      
+      // Запуск игры
+      setTimeout(() => {
+        document.getElementById('loading').style.display = 'none';
+        gameLoop();
+      }, 3000);
+    }
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      player.x = width / 2;
+      player.y = height / 2;
+    }
+
+    function animateLoading() {
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 2;
+        document.getElementById('progressFill').style.width = progress + '%';
+        if (progress >= 100) {
+          clearInterval(interval);
+        }
+      }, 50);
+    }
+
+    // === ГЕНЕРАЦИЯ МИРА ===
+    function generateWorld() {
+      // Здания
+      for (let i = 0; i < 50; i++) {
+        world.buildings.push({
+          x: Math.random() * 2000 - 1000,
+          y: Math.random() * 2000 - 1000,
+          width: 60 + Math.random() * 100,
+          height: 80 + Math.random() * 150,
+          color: `hsl(${Math.random() * 360}, 40%, ${20 + Math.random() * 20}%)`
+        });
+      }
+      
+      // NPC
+      for (let i = 0; i < 30; i++) {
+        world.npcs.push({
+          x: Math.random() * 2000 - 1000,
+          y: Math.random() * 2000 - 1000,
+          health: 100,
+          type: ['civilian', 'cop', 'thug'][Math.floor(Math.random() * 3)],
+          direction: Math.random() * Math.PI * 2,
+          speed: 0.5 + Math.random()
+        });
+      }
+      
+      // Транспорт
+      for (let i = 0; i < 15; i++) {
+        world.vehicles.push({
+          x: Math.random() * 2000 - 1000,
+          y: Math.random() * 2000 - 1000,
+          type: ['car', 'bike', 'truck'][Math.floor(Math.random() * 3)],
+          fuel: 100,
+          occupied: false
+        });
+      }
+    }
+
+    // === ОТРИСОВКА МИРА ===
+    function drawWorld() {
+      // Фон
+      ctx.fillStyle = player.nightVision ? '#0a1a0a' : '#1a2a4a';
+      ctx.fillRect(0, 0, width, height);
+      
+      // Солнце/луна
+      ctx.beginPath();
+      ctx.arc(width/2 - camera.x, height/2 - camera.y, 100, 0, Math.PI * 2);
+      ctx.fillStyle = player.nightVision ? 'rgba(200, 200, 255, 0.3)' : 'rgba(255, 255, 200, 0.8)';
+      ctx.fill();
+      
+      // Здания
+      world.buildings.forEach(building => {
+        const screenX = building.x - camera.x;
+        const screenY = building.y - camera.y;
+        
+        if (screenX > -building.width && screenX < width && 
+            screenY > -building.height && screenY < height) {
+          
+          ctx.fillStyle = building.color;
+          ctx.fillRect(screenX, screenY, building.width, building.height);
+          
+          // Окна
+          ctx.fillStyle = player.nightVision ? '#00ffff' : '#ffff00';
+          const cols = Math.floor(building.width / 15);
+          const rows = Math.floor(building.height / 20);
+          for (let i = 0; i < cols; i++) {
+            for (let j = 0; j < rows; j++) {
+              if (Math.random() > 0.3) {
+                ctx.fillRect(
+                  screenX + 5 + i * 15,
+                  screenY + 10 + j * 20,
+                  8, 12
+                );
+              }
+            }
+          }
+        }
+      });
+      
+      // NPC
+      world.npcs.forEach(npc => {
+        const screenX = npc.x - camera.x;
+        const screenY = npc.y - camera.y;
+        
+        if (screenX > -50 && screenX < width + 50 && 
+            screenY > -50 && screenY < height + 50) {
+          
+          let icon = '👤';
+          switch(npc.type) {
+            case 'cop': icon = '👮'; break;
+            case 'thug': icon = ' GANG'; break;
+          }
+          
+          ctx.font = '20px Arial';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = npc.health > 0 ? '#ffffff' : '#888888';
+          ctx.fillText(icon, screenX, screenY);
+          
+          // Полоска здоровья
+          if (npc.health < 100) {
+            const healthBarX = screenX - 20;
+            const healthBarY = screenY - 20;
+            ctx.fillStyle = '#333';
+            ctx.fillRect(healthBarX, healthBarY, 40, 4);
+            ctx.fillStyle = npc.health > 50 ? '#00ff00' : npc.health > 25 ? '#ffff00' : '#ff0000';
+            ctx.fillRect(healthBarX, healthBarY, (npc.health / 100) * 40, 4);
+          }
+        }
+      });
+      
+      // Транспорт
+      world.vehicles.forEach(vehicle => {
+        if (!vehicle.occupied) {
+          const screenX = vehicle.x - camera.x;
+          const screenY = vehicle.y - camera.y;
+          
+          if (screenX > -50 && screenX < width + 50 && 
+              screenY > -50 && screenY < height + 50) {
+            
+            let icon = '🚗';
+            switch(vehicle.type) {
+              case 'bike': icon = '🏍️'; break;
+              case 'truck': icon = '🚚'; break;
+            }
+            
+            ctx.font = '25px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = vehicle.fuel > 20 ? '#ffffff' : '#ff6666';
+            ctx.fillText(icon, screenX, screenY);
+          }
+        }
+      });
+    }
+
+    // === ОБНОВЛЕНИЕ ИГРЫ ===
+    function update(deltaTime) {
+      // Обновление камеры
+      camera.x = player.x - width / 2;
+      camera.y = player.y - height / 2;
+      
+      // Управление игроком
+      if (!player.inVehicle) {
+        if (keys['w'] || keys['arrowup']) player.y -= player.speed;
+        if (keys['s'] || keys['arrowdown']) player.y += player.speed;
+        if (keys['a'] || keys['arrowleft']) player.x -= player.speed;
+        if (keys['d'] || keys['arrowright']) player.x += player.speed;
+      } else if (player.vehicle) {
+        // Управление транспортом
+        if (keys['w'] || keys['arrowup']) {
+          player.vehicle.x += Math.cos(player.vehicle.direction) * 5;
+          player.vehicle.y += Math.sin(player.vehicle.direction) * 5;
+          player.x = player.vehicle.x;
+          player.y = player.vehicle.y;
+        }
+        if (keys['s'] || keys['arrowdown']) {
+          player.vehicle.x -= Math.cos(player.vehicle.direction) * 3;
+          player.vehicle.y -= Math.sin(player.vehicle.direction) * 3;
+          player.x = player.vehicle.x;
+          player.y = player.vehicle.y;
+        }
+        if (keys['a'] || keys['arrowleft']) player.vehicle.direction -= 0.1;
+        if (keys['d'] || keys['arrowright']) player.vehicle.direction += 0.1;
+        
+        // Расход топлива
+        player.vehicle.fuel = Math.max(0, player.vehicle.fuel - 0.1 * deltaTime);
+        if (player.vehicle.fuel <= 0) {
+          player.inVehicle = false;
+          player.vehicle.occupied = false;
+          player.vehicle = null;
+          document.getElementById('vehicle-ui').style.display = 'none';
+        }
+      }
+      
+      // Обновление NPC
+      world.npcs.forEach(npc => {
+        if (npc.health > 0) {
+          // Случайное движение
+          if (Math.random() < 0.02) {
+            npc.direction = Math.random() * Math.PI * 2;
+          }
+          
+          npc.x += Math.cos(npc.direction) * npc.speed;
+          npc.y += Math.sin(npc.direction) * npc.speed;
+          
+          // Отскок от стен
+          if (npc.x < -1000 || npc.x > 1000) npc.direction = Math.PI - npc.direction;
+          if (npc.y < -1000 || npc.y > 1000) npc.direction = -npc.direction;
+        }
+      });
+      
+      // Проверка столкновений с транспортом
+      if (!player.inVehicle) {
+        world.vehicles.forEach(vehicle => {
+          if (!vehicle.occupied) {
+            const dx = player.x - vehicle.x;
+            const dy = player.y - vehicle.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 40) {
+              // Показать подсказку
+              addChatMessage(`[СИСТЕМА] Нажмите 'V' чтобы сесть в ${vehicle.type}`, 'system');
+            }
+          }
+        });
+      }
+      
+      // Система уровней
+      if (player.exp >= player.level * 100) {
+        player.level++;
+        player.exp = 0;
+        player.health = 100;
+        player.armor = 100;
+        addChatMessage(`[СИСТЕМА] Новый уровень!`, 'system');
+      }
+      
+      updateUI();
+    }
+
+    // === УПРАВЛЕНИЕ ===
+    function handleMouseMove(e) {
+      const rect = canvas.getBoundingClientRect();
+      mousePos.x = e.clientX - rect.left;
+      mousePos.y = e.clientY - rect.top;
+      
+      // Обновление прицела
+      document.getElementById('crosshair').style.left = e.clientX + 'px';
+      document.getElementById('crosshair').style.top = e.clientY + 'px';
+    }
+
+    function handleClick(e) {
+      // Выстрел
+      if (player.weapon === 'pistol') {
+        // Простая анимация выстрела
+        addChatMessage(`[ПАВЕЛ] Выстрел из ${player.weapon}`, 'user');
+      }
+    }
+
+    // === ФУНКЦИИ ИГРОКА ===
+    function toggleVehicle() {
+      if (player.inVehicle) {
+        player.inVehicle = false;
+        player.vehicle.occupied = false;
+        player.vehicle = null;
+        document.getElementById('vehicle-ui').style.display = 'none';
+        addChatMessage('[СИСТЕМА] Вышел из транспорта', 'system');
+      } else {
+        // Поиск ближайшего транспорта
+        let closestVehicle = null;
+        let closestDistance = Infinity;
+        
+        world.vehicles.forEach(vehicle => {
+          if (!vehicle.occupied) {
+            const dx = player.x - vehicle.x;
+            const dy = player.y - vehicle.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 50 && distance < closestDistance) {
+              closestDistance = distance;
+              closestVehicle = vehicle;
+            }
+          }
+        });
+        
+        if (closestVehicle) {
+          player.inVehicle = true;
+          player.vehicle = closestVehicle;
+          player.vehicle.occupied = true;
+          player.vehicle.direction = 0;
+          document.getElementById('vehicle-ui').style.display = 'block';
+          document.getElementById('vehicleType').textContent = closestVehicle.type;
+          addChatMessage(`[СИСТЕМА] Сел в ${closestVehicle.type}`, 'system');
+        } else {
+          addChatMessage('[СИСТЕМА] Нет транспорта поблизости', 'system');
+        }
+      }
+    }
+
+    function useHeal() {
+      if (player.health < 100) {
+        player.health = Math.min(100, player.health + 25);
+        player.money -= 100;
+        addChatMessage('[СИСТЕМА] Использована аптечка', 'system');
+      } else {
+        addChatMessage('[СИСТЕМА] Здоровье в норме', 'system');
+      }
+    }
+
+    function openShop() {
+      addChatMessage('[МАГАЗИН] Добро пожаловать! Выберите товар.', 'system');
+      addChatMessage('1. Аптечка - 100$', 'system');
+      addChatMessage('2. Бронежилет - 500$', 'system');
+      addChatMessage('3. Новое оружие - 1000$', 'system');
+    }
+
+    function callPolice() {
+      addChatMessage('[ПОЛИЦИЯ] Помощь в пути!', 'system');
+      // Добавить полицию на карту
+      world.npcs.push({
+        x: player.x + 100,
+        y: player.y + 100,
+        health: 100,
+        type: 'cop',
+        direction: Math.atan2(player.y - (player.y + 100), player.x - (player.x + 100)),
+        speed: 2
+      });
+    }
+
+    function toggleNightVision() {
+      player.nightVision = !player.nightVision;
+      addChatMessage(`[СИСТЕМА] Ночное видение ${player.nightVision ? 'включено' : 'выключено'}`, 'system');
+    }
+
+    // === ИНТЕРФЕЙС ===
+    function updateUI() {
+      // Статистика игрока
+      document.getElementById('health').textContent = Math.floor(player.health);
+      document.getElementById('armor').textContent = Math.floor(player.armor);
+      document.getElementById('money').textContent = player.money;
+      document.getElementById('level').textContent = player.level;
+      document.getElementById('exp').textContent = `${player.exp}/${player.level * 100}`;
+      document.getElementById('kills').textContent = player.kills;
+      
+      // Позиция игрока
+      const playerEl = document.getElementById('player');
+      playerEl.style.left = player.x - camera.x + 'px';
+      playerEl.style.top = player.y - camera.y + 'px';
+      
+      // Обновление транспорта
+      if (player.inVehicle && player.vehicle) {
+        document.getElementById('fuelLevel').textContent = Math.floor(player.vehicle.fuel) + '%';
+        document.getElementById('vehicleSpeed').textContent = Math.floor(player.vehicle.fuel > 0 ? 60 : 0) + ' км/ч';
+      }
+    }
+
+    // === ЧАТ ===
+    function addChatMessage(text, type = 'user') {
+      const chat = document.getElementById('chat');
+      const div = document.createElement('div');
+      div.className = `chat-message chat-${type}`;
+      div.textContent = text;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    // === ОСНОВНОЙ ЦИКЛ ===
+    function gameLoop(timestamp) {
+      if (!lastUpdate) lastUpdate = timestamp;
+      deltaTime = (timestamp - lastUpdate) / 16; // Нормализация к 60 FPS
+      lastUpdate = timestamp;
+      
+      ctx.clearRect(0, 0, width, height);
+      
+      update(deltaTime);
+      drawWorld();
+      
+      requestAnimationFrame(gameLoop);
+    }
+
+    // === ЗАПУСК ИГРЫ ===
+    window.onload = () => {
+      init();
+    };
+
+    // === КОМАНДЫ ===
+    document.addEventListener('keydown', e => {
+      if (e.key.toLowerCase() === 'v') {
+        toggleVehicle();
+      }
+      if (e.key.toLowerCase() === 'h') {
+        useHeal();
+      }
+      if (e.key.toLowerCase() === 'n') {
+        toggleNightVision();
+      }
+    });
+  </script>
+</body>
+</html>

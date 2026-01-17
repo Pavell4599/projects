@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>REAL SIGMA GOON: RAP HACKER EDITION</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+      font-family: 'Comic Sans MS', Impact, cursive;
+    }
+    #bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        #ff00ff,
+        #ff00ff 10px,
+        #00ffff 10px,
+        #00ffff 20px
+      );
+      animation: glitch 1.5s infinite;
+      opacity: 0.4;
+    }
+    @keyframes glitch {
+      0%, 100% { transform: translate(0); }
+      20% { transform: translate(-3px, 3px); }
+      40% { transform: translate(3px, -3px); }
+      60% { transform: translate(-3px, -3px); }
+      80% { transform: translate(3px, 3px); }
+    }
+    #title {
+      position: absolute;
+      top: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 50px;
+      color: white;
+      text-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    #helicopter {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 120px;
+      z-index: 100;
+      transition: transform 0.2s;
+    }
+    .pig {
+      position: absolute;
+      font-size: 50px;
+      z-index: 10;
+    }
+    #chat {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 350px;
+      height: 180px;
+      background: rgba(0,0,0,0.8);
+      border: 3px solid #ff00ff;
+      color: #00ff00;
+      padding: 10px;
+      font-family: monospace;
+      overflow-y: auto;
+    }
+    .chat-msg {
+      margin: 4px 0;
+      animation: fadeIn 0.3s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    #controls {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn {
+      padding: 12px 25px;
+      font-size: 20px;
+      background: linear-gradient(90deg, #ff00ff, #00ffff);
+      border: none;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      text-shadow: 0 0 8px black;
+      font-family: 'Comic Sans MS';
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #ff00ff;
+    }
+    #gigachad {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 80px;
+      color: gold;
+      text-shadow: 0 0 30px gold;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 200;
+    }
+    #microphone {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -100px);
+      font-size: 60px;
+      color: gold;
+      opacity: 0;
+      z-index: 99;
+    }
+  </style>
+</head>
+<body>
+  <div id="bg"></div>
+  <div id="title">REAL SIGMA GOON 💪 | RAP HACKER EDITION</div>
+
+  <div id="helicopter">🚁</div>
+  <div id="microphone">🎤</div>
+  <div id="gigachad">GIGACHAD MODE ACTIVATED</div>
+
+  <div id="chat">
+    <div class="chat-msg">[AI_Troll]: h3ll0 n00b, ur l1f3 1s 0wn3d</div>
+    <div class="chat-msg">[SigmaDed]: bruh skrr skrr 💯</div>
+  </div>
+
+  <div id="controls">
+    <button class="btn" onclick="dropTrack()">DROP TRACK (SPACE)</button>
+    <button class="btn" onclick="hassanAll()">ХАСАНЯТ! (H)</button>
+    <button class="btn" onclick="hackNubs()">1337 HACK (K)</button>
+  </div>
+
+  <audio id="beat" loop>
+    <source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAA" type="audio/wav"/>
+  </audio>
+
+  <script>
+    // === ГЛОБАЛЫ ===
+    const pigs = [];
+    let gigachadActive = false;
+    let keys = {};
+    let chatMessages = [
+      "lmao n00b",
+      "u jst got h4xx0r3d",
+      "skrrrt bruh 💯",
+      "sigma grindset activated",
+      "ur m0m is my fan",
+      "g0 g0 g0 n00b",
+      "hassan on u fr",
+      "1337 > u"
+    ];
+
+    // === ИНИЦИАЛИЗАЦИЯ ===
+    function init() {
+      spawnPigs();
+      startChatSpam();
+      document.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
+      document.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+      
+      // Анимация микрофона
+      setInterval(() => {
+        if (Math.random() < 0.1) {
+          const mic = document.getElementById('microphone');
+          mic.style.opacity = '1';
+          setTimeout(() => mic.style.opacity = '0', 300);
+        }
+      }, 1000);
+    }
+
+    // === СВИНЬИ ===
+    function spawnPigs() {
+      for (let i = 0; i < 10; i++) {
+        const pig = document.createElement('div');
+        pig.className = 'pig';
+        pig.innerHTML = '🐷';
+        pig.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+        pig.style.top = Math.random() * (window.innerHeight - 200) + 'px';
+        document.body.appendChild(pig);
+        pigs.push({
+          el: pig,
+          x: parseFloat(pig.style.left),
+          y: parseFloat(pig.style.top),
+          dx: (Math.random() - 0.5) * 3,
+          dy: (Math.random() - 0.5) * 3,
+          isHacked: false
+        });
+      }
+      animatePigs();
+    }
+
+    function animatePigs() {
+      pigs.forEach(pig => {
+        if (pig.isHacked) return;
+        
+        pig.x += pig.dx;
+        pig.y += pig.dy;
+        
+        if (pig.x <= 0 || pig.x >= window.innerWidth - 50) pig.dx *= -1;
+        if (pig.y <= 0 || pig.y >= window.innerHeight - 100) pig.dy *= -1;
+        
+        pig.el.style.left = pig.x + 'px';
+        pig.el.style.top = pig.y + 'px';
+      });
+      requestAnimationFrame(animatePigs);
+    }
+
+    // === ФУНКЦИИ ГЕРОЯ ===
+    function dropTrack() {
+      const heli = document.getElementById('helicopter');
+      heli.style.transform = 'translate(-50%, -50%) rotate(10deg)';
+      setTimeout(() => heli.style.transform = 'translate(-50%, -50%)', 200);
+      
+      addChatMessage("[ТЫ]: DROP THE BEAT, NUBS! 💿");
+      
+      // Включить бит
+      try {
+        const beat = document.getElementById('beat');
+        beat.volume = 0.3;
+        beat.play().catch(e => {});
+      } catch (e) {}
+    }
+
+    function hassanAll() {
+      pigs.forEach(pig => {
+        if (!pig.isHacked) {
+          pig.el.innerHTML = 'ХАСАНЯТ!';
+          pig.el.style.fontSize = '70px';
+          pig.el.style.color = '#ff00ff';
+          setTimeout(() => {
+            if (!pig.isHacked) {
+              pig.el.innerHTML = '🐷';
+              pig.el.style.fontSize = '50px';
+              pig.el.style.color = '';
+            }
+          }, 1500);
+        }
+      });
+      addChatMessage("[ТЫ]: ХАСАНЮ ВСЕХ НУБОВ! 😤");
+    }
+
+    function hackNubs() {
+      let hackedCount = 0;
+      pigs.forEach(pig => {
+        if (!pig.isHacked) {
+          pig.isHacked = true;
+          pig.el.innerHTML = '🐸';
+          pig.el.style.color = '#00ff00';
+          hackedCount++;
+        }
+      });
+      addChatMessage(`[ТЫ]: 1337 H4CK3D ${hackedCount} NUBS! 💻`);
+    }
+
+    // === ЧАТ ===
+    function startChatSpam() {
+      setInterval(() => {
+        const troll = ["AI_Troll", "SigmaDed", "GogoMaster", "L33tH4x0r"][Math.floor(Math.random() * 4)];
+        const msg = chatMessages[Math.floor(Math.random() * chatMessages.length)];
+        addChatMessage(`[${troll}]: ${msg}`);
+      }, 2500);
+    }
+
+    function addChatMessage(msg) {
+      const chat = document.getElementById('chat');
+      const div = document.createElement('div');
+      div.className = 'chat-msg';
+      div.textContent = msg;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    // === GIGACHAD MODE ===
+    function activateGigachad() {
+      if (gigachadActive) return;
+      gigachadActive = true;
+      const gigachad = document.getElementById('gigachad');
+      gigachad.style.opacity = '1';
+      gigachad.style.animation = 'pulse 0.5s infinite';
+      
+      // Все свиньи становятся фиолетовыми
+      pigs.forEach(pig => {
+        pig.el.style.color = '#ff00ff';
+      });
+      
+      setTimeout(() => {
+        gigachad.style.opacity = '0';
+        gigachadActive = false;
+        pigs.forEach(pig => {
+          if (!pig.isHacked) pig.el.style.color = '';
+        });
+      }, 5000);
+    }
+
+    // === УПРАВЛЕНИЕ ===
+    setInterval(() => {
+      if (keys[' ']) dropTrack();
+      if (keys['h']) hassanAll();
+      if (keys['k']) hackNubs();
+      if (keys['g']) activateGigachad();
+    }, 100);
+
+    // === ЗАПУСК ===
+    window.onload = () => {
+      setTimeout(() => {
+        init();
+        addChatMessage("Добро пожаловать в REAL SIGMA GOON, брат.");
+        addChatMessage("Ты — легенда. Ты — хакер. Ты — GOON.");
+      }, 1000);
+    };
+
+    // === ЗАЩИТА ОТ НУБОВ ===
+    window.addEventListener('beforeunload', () => {
+      alert("Ты не можешь выйти, GOON! Гогород нуждается в тебе!");
+    });
+
+    // === КЛИК ПО СВИНЬЕ ===
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('pig')) {
+        e.target.style.transform = 'scale(1.3)';
+        setTimeout(() => e.target.style.transform = '', 200);
+        addChatMessage("[ТЫ]: ТРОЛЛЮ ЭТОГО НУБА ПРЯМО В БИТКОИН-КОШЕЛЁК! 💸");
+      }
+    });
+  </script>
+</body>
+</html>

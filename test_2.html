@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>ГогоСвиньи: Сигма-Эдитон</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+      font-family: 'Comic Sans MS', cursive;
+    }
+    #sigmaBg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        #ff00ff,
+        #ff00ff 10px,
+        #00ffff 10px,
+        #00ffff 20px
+      );
+      animation: glitch 2s infinite;
+      opacity: 0.3;
+    }
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-5px, 5px); }
+      40% { transform: translate(5px, -5px); }
+      60% { transform: translate(-5px, -5px); }
+      80% { transform: translate(5px, 5px); }
+      100% { transform: translate(0); }
+    }
+    #sigmaText {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 48px;
+      color: white;
+      text-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .pig {
+      position: absolute;
+      font-size: 60px;
+      transition: transform 0.3s;
+      z-index: 10;
+    }
+    #chat {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 300px;
+      height: 200px;
+      background: rgba(0,0,0,0.7);
+      border: 2px solid #ff00ff;
+      color: #00ff00;
+      padding: 10px;
+      font-family: monospace;
+      overflow-y: auto;
+    }
+    .chat-msg {
+      margin: 5px 0;
+      animation: fadeIn 0.5s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    #shashkuyBtn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 30px;
+      font-size: 24px;
+      background: linear-gradient(90deg, #ff00ff, #00ffff);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      text-shadow: 0 0 10px black;
+      z-index: 100;
+    }
+    #shashkuyBtn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px #ff00ff;
+    }
+    #menu {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+    }
+    .sigma-btn {
+      background: #ff00ff;
+      color: white;
+      border: 3px solid #00ffff;
+      padding: 15px 40px;
+      margin: 10px;
+      font-size: 28px;
+      font-family: 'Comic Sans MS';
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    .sigma-btn:hover {
+      background: #00ffff;
+      color: #ff00ff;
+    }
+  </style>
+</head>
+<body>
+  <div id="sigmaBg"></div>
+  <div id="sigmaText">REAL SIGMA ONLY 💪</div>
+
+  <div id="menu">
+    <h1 style="color:#ff00ff; font-size:60px; margin-bottom:30px;">ГОГОСВИНЬИ</h1>
+    <button class="sigma-btn" onclick="startGame()">ВОЙТИ В ГОГОРОД</button>
+    <button class="sigma-btn" onclick="alert('Ты уже сигма, брат. Никаких настроек.')">НАСТРОЙКИ</button>
+    <div style="margin-top:30px; color:#00ff00;">
+      v1.0 | Только для истинных сигм
+    </div>
+  </div>
+
+  <div id="chat">
+    <div class="chat-msg">[Тролль_666]: лол нуб</div>
+    <div class="chat-msg">[SigmaDed]: бррр скрр</div>
+  </div>
+
+  <button id="shashkuyBtn" onclick="shashkuyAll()">ШАШКУЮ</button>
+
+  <audio id="hasanSound" preload="auto">
+    <source src="data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mpeg"/>
+  </audio>
+
+  <script>
+    const pigs = [];
+    let chatMessages = [
+      "лол нуб",
+      "хасанят!",
+      "скрр бррр",
+      "ты не сигма, ты нуб",
+      "гогород форева",
+      "шашкую на нубов",
+      "реал сигма онли",
+      "лох пидр"
+    ];
+    let gameStarted = false;
+
+    function startGame() {
+      document.getElementById('menu').style.display = 'none';
+      gameStarted = true;
+      spawnPigs();
+      startChatSpam();
+    }
+
+    function spawnPigs() {
+      for (let i = 0; i < 8; i++) {
+        const pig = document.createElement('div');
+        pig.className = 'pig';
+        pig.innerHTML = '🐷';
+        pig.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+        pig.style.top = Math.random() * (window.innerHeight - 200) + 'px';
+        document.body.appendChild(pig);
+        pigs.push({
+          el: pig,
+          x: parseFloat(pig.style.left),
+          y: parseFloat(pig.style.top),
+          dx: (Math.random() - 0.5) * 4,
+          dy: (Math.random() - 0.5) * 4
+        });
+      }
+      animatePigs();
+    }
+
+    function animatePigs() {
+      if (!gameStarted) return;
+      
+      pigs.forEach(pig => {
+        pig.x += pig.dx;
+        pig.y += pig.dy;
+        
+        // Отскок от стен
+        if (pig.x <= 0 || pig.x >= window.innerWidth - 60) pig.dx *= -1;
+        if (pig.y <= 0 || pig.y >= window.innerHeight - 100) pig.dy *= -1;
+        
+        pig.el.style.left = pig.x + 'px';
+        pig.el.style.top = pig.y + 'px';
+        
+        // Каждые 2 секунды — хасанят!
+        if (Math.random() < 0.005) {
+          hasan(pig.el);
+        }
+      });
+      
+      requestAnimationFrame(animatePigs);
+    }
+
+    function hasan(pigEl) {
+      pigEl.style.fontSize = '80px';
+      pigEl.innerHTML = 'ХАСАНЯТ!';
+      pigEl.style.color = '#ff00ff';
+      setTimeout(() => {
+        pigEl.innerHTML = '🐷';
+        pigEl.style.fontSize = '60px';
+        pigEl.style.color = '';
+      }, 1000);
+      
+      // Звук (если поддерживается)
+      try {
+        const sound = document.getElementById('hasanSound');
+        sound.currentTime = 0;
+        sound.play().catch(e => console.log("Audio blocked"));
+      } catch (e) {}
+    }
+
+    function shashkuyAll() {
+      pigs.forEach(pig => {
+        pig.el.style.transform = 'rotate(360deg)';
+        setTimeout(() => {
+          pig.el.style.transform = '';
+        }, 500);
+      });
+      
+      addChatMessage("[ТЫ]: ШАШКУЮ НА ВСЕХ НУБОВ!!!");
+    }
+
+    function startChatSpam() {
+      setInterval(() => {
+        const troll = ["Тролль_666", "SigmaDed", "ГогоМастер", "НубоУбийца"][Math.floor(Math.random() * 4)];
+        const msg = chatMessages[Math.floor(Math.random() * chatMessages.length)];
+        addChatMessage(`[${troll}]: ${msg}`);
+      }, 3000);
+    }
+
+    function addChatMessage(msg) {
+      const chat = document.getElementById('chat');
+      const div = document.createElement('div');
+      div.className = 'chat-msg';
+      div.textContent = msg;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    // Защита от выхода
+    window.addEventListener('beforeunload', () => {
+      alert("Ты не можешь выйти! Ты же сигма! 💪");
+    });
+
+    // Easter egg: нажми на свинью
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('pig')) {
+        e.target.style.transform = 'scale(1.5)';
+        setTimeout(() => {
+          e.target.style.transform = '';
+        }, 200);
+        addChatMessage("[ТЫ]: ТРОЛЛЮ ЭТОГО НУБА!!!");
+      }
+    });
+  </script>
+</body>
+</html>
