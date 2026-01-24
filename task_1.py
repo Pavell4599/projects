@@ -3,13 +3,14 @@ import matplotlib.pyplot as plt
 
 
 def cycloid():
-    r = 
+    
+    t = np.arange(0, np.pi * 3, 0.1)
     R = 1
    
-    x = R * np.cos(alpha)
-    y = R * np.sin(alpha)
+    x = R * (t - np.sin(t))
+    y = R * (1 - np.cos(t))
    
-    plt.plot(x, y, ls = '--', lw = 3)
+    plt.plot(x, y, ls = '-', lw = 3)
 
     plt.xlim(-1.5, 1.5)
     plt.ylim(-1.5, 1.5)
@@ -23,12 +24,13 @@ def cycloid():
 
 def astroid():
     
-    alpha = np.arange(-2 * np.pi, 2 * np.pi, 0.1)
+    t = np.arange(0, np.pi * 2, 0.1)
+    R = 1
    
-    x = R * np.cos(alpha)
-    y = R * np.sin(alpha)
+    x = R * np.cos(t)**3
+    y = R * np.sin(t)**3
    
-    plt.plot(x, y, ls = '--', lw = 3)
+    plt.plot(x, y, ls = '-', lw = 3)
     
     plt.xlim(-1.5, 1.5)
     plt.ylim(-1.5, 1.5)
