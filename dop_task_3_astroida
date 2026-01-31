@@ -1,0 +1,79 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+
+
+fig, ax = plt.subplots()
+
+astroida, = plt.plot([], [], '-', lw=1.5, color = 'blue')
+circle_in, = plt.plot([], [], '-', lw=1.5, color = 'green')
+circle, = plt.plot([], [], '-', lw=1.5, color = 'black')
+rad, = plt.plot([], [], '-', lw=1.75, color = 'red')
+plt.axis('equal')
+plt.grid()
+x, y = [], []
+
+
+frames_count = 200
+R = 3.5
+frames = np.arange(frames_count)
+angle = np.linspace(0, 2 * np.pi, frames_count)
+r_pt = R - R / 4
+x_pt = r_pt * np.cos(angle) 
+y_pt = r_pt * np.sin(angle) 
+
+ax.set_xlim(-5, 5) 
+ax.set_ylim(-5, 5) 
+
+
+def astroida_fr(frame):
+    r = R
+    t = angle[frame]
+    xapp = r * np.cos(t)**3
+    yapp = r * np.sin(t)**3
+    x.append(xapp)
+    y.append(yapp)
+    
+    x_rad = [x_pt[frame], xapp]
+    y_rad = [y_pt[frame], yapp]
+    
+    rad.set_data(x_rad, y_rad)
+    astroida.set_data(x, y)
+    return astroida, rad
+
+def circle_fr_in(frame):
+    fr_x = x_pt[frame]
+    fr_y = y_pt[frame]
+    r = R / 4
+    alpha = np.arange(-0.1, 2 * np.pi, 0.1)
+    x = r * np.cos(alpha) + fr_x
+    y = r * np.sin(alpha) + fr_y
+
+    circle_in.set_data(x, y)
+    return circle_in
+    
+def circle_fr(frame):
+    r = R
+    alpha = np.arange(-0.1, 2 * np.pi, 0.1)
+    x = r * np.cos(alpha) 
+    y = r * np.sin(alpha)
+
+    circle.set_data(x, y)
+    return circle
+
+def update(t):
+    return astroida_fr(t), circle_fr_in(t), circle_fr(t)
+
+
+ani = FuncAnimation(fig, 
+                    update, 
+                    frames=frames, 
+                    interval= 20) 
+
+ani.save('astroida.gif', writer="pillow", dpi = 200)
+
+
+
+
+
