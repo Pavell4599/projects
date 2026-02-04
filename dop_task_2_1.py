@@ -39,7 +39,7 @@ ani = FuncAnimation(fig,
                     frames=frames, 
                     interval= 40) 
 
-ani.save('rotate_square.gif', writer="pillow", dpi = 120)
+ani.save('rotate_square_1.gif', writer="pillow", dpi = 120)
 
 
 
