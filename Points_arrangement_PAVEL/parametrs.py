@@ -1,0 +1,4 @@
+h = 0.5
+fig_r = 10
+fig_center = {'x': 0, 'y': 0, 'z': 0}
+fig_quality = 500
