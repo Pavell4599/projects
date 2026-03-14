@@ -7,10 +7,33 @@ import template_model as cai
 float_type = np.float64
 int_type = np.int32
 
+AU = 1.49e11 # Астрономическая единица, м
+G = 6.67e-11 # Гравитационная постоянная, м^3/(кг*с^2)
+M_SUN = 1.998e+30 # Масса Солнца, кг
+GAMMA = 5.0 / 3.0 # Постоянная адиобатты
+m_H = 2 * 1.6735575e-27 # Масса молекулы водорода, кг
+n_H = 2e+12  # Характерная концентрация газа, частиц/м^3
+MU_H = 0.002  # Молярная масса водорода, кг/моль
+R = 8.3144598  # Газовая постоянная, Дж/(моль*К)
+N_a = 6.0221409e+23 # Число Авогадро 
+k = 1.38064852e-23 # Больцманская постоянная
+ETA = 1.2348 # Коэффициент среднего расстояния между частицами SPH
+
+num_part = 500000
+box_size = 20 * AU
+radius_interior = AU * 0.6
+radius_exterior = AU * 1.2
+thickness = AU * 0.2
+temperature = 100
+
+gas_data, material_parts_data = cai.create_regular_dist_model(temperature, radius_interior, radius_exterior, thickness, box_size)
+
+data = cai.output_gas_data(*gas_data)
+
 def part_filter(parts_type):
     parts_data = {}
 
-    for key, value in cai.data.items():
+    for key, value in data.items():
         if parts_type in key:
             parts_data[key[1]] = value
     
@@ -28,25 +51,25 @@ gas_parts_vel = np.array(tuple(zip(
                 gas_parts['particle_velocity_z'])))
                     
 
-stars_parts = part_filter('star')
+# stars_parts = part_filter('star')
 
-num_star_part = len(stars_parts['particle_mass'])
+# num_star_part = len(stars_parts['particle_mass'])
 
-stars_parts_coords = np.array(tuple(zip(
-                    stars_parts['particle_position_x'], 
-                    stars_parts['particle_position_y'], 
-                    stars_parts['particle_position_z'])))
+# stars_parts_coords = np.array(tuple(zip(
+#                     stars_parts['particle_position_x'], 
+#                     stars_parts['particle_position_y'], 
+#                     stars_parts['particle_position_z'])))
 
-stars_parts_vel = np.array(tuple(zip(
-                stars_parts['particle_velocity_x'], 
-                stars_parts['particle_velocity_y'], 
-                stars_parts['particle_velocity_z'])))
+# stars_parts_vel = np.array(tuple(zip(
+#                 stars_parts['particle_velocity_x'], 
+#                 stars_parts['particle_velocity_y'], 
+#                 stars_parts['particle_velocity_z'])))
 
-sink_parts = part_filter('sinks')
+# sink_parts = part_filter('sinks')
 
 IC = h5py.File('./IC.hdf5', 'w')
 grp = IC.create_group("/Header")
-grp.attrs["BoxSize"] = [cai.meta_data['box_size'], cai.meta_data['box_size'], 0]
+grp.attrs["BoxSize"] = [box_size, box_size, 0]
 grp.attrs["NumPart_Total"] = [len(gas_parts['particle_mass']), 2, 0, 0, 0, 0]
 grp.attrs["NumPart_Total_HighWord"] = [0, 0, 0, 0, 0, 0]
 grp.attrs["NumPart_ThisFile"] = [len(gas_parts['particle_mass']), 2, 0, 0, 0, 0]
@@ -73,11 +96,11 @@ grp.create_dataset("ParticleIDs", data=np.arange(0, len(gas_parts['particle_mass
 grp.create_dataset("Density", data=gas_parts['density'], dtype="f")
 
 
-grp = IC.create_group("/PartType1")
-grp.create_dataset("Coordinates",  data=stars_parts_coords, dtype="f")
-grp.create_dataset("Velocities", data=stars_parts_vel, dtype="f")
-grp.create_dataset("Masses", data=stars_parts['particle_mass'], dtype="f")
-grp.create_dataset("ParticleIDs", data=np.arange(len(gas_parts['particle_mass']), len(gas_parts['particle_mass'])+int(2)))
+# grp = IC.create_group("/PartType1")
+# grp.create_dataset("Coordinates",  data=stars_parts_coords, dtype="f")
+# grp.create_dataset("Velocities", data=stars_parts_vel, dtype="f")
+# grp.create_dataset("Masses", data=stars_parts['particle_mass'], dtype="f")
+# grp.create_dataset("ParticleIDs", data=np.arange(len(gas_parts['particle_mass']), len(gas_parts['particle_mass'])+int(2)))
 
 
 # IC = h5py.File('./IC.hdf5', 'w')

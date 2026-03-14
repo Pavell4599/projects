@@ -92,9 +92,10 @@ def _vel_calc(x, y):
 def create_regular_dist_model(temperature, # Температура, К
                               radius_interior, # Внутренний радиус газового диска
                               radius_exterior, # Внешний радиус газового диска
-                              thickness # Толщина газового диска
+                              thickness, # Толщина газового диска
+                              box_size
                               ):
-
+#########################################################################
     inner_polygon = geom.Polygon(coords_generator(radius_interior, 1000))
     outer_polygon = geom.Polygon(coords_generator(radius_exterior, 1000))
     points_numper_per_side = 200
@@ -112,7 +113,7 @@ def create_regular_dist_model(temperature, # Температура, К
                 pos_xy.append([x + box_size / 2, y + box_size / 2, 0])
                 v_x, v_y = _vel_calc(x, y)
                 vel_xy.append([v_x, v_y, 0])
-    
+##############################################################################
     num_part = len(pos_xy)
     pos = np.array(pos_xy)
     vel = np.array(vel_xy)
