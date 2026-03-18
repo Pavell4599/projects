@@ -8,4 +8,5 @@ then
 fi
 
 # Run SWIFT
+# ../../../swift --self-gravity --threads=16 config.yml 2>&1 | tee output.log
 ../../../swift --hydro --self-gravity --threads=16 config.yml 2>&1 | tee output.log

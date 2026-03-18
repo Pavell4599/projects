@@ -152,8 +152,8 @@ grp.attrs["Flag_Entropy_ICs"] = [0, 0, 0, 0, 0, 0]
 grp.attrs["Dimension"] = 2
 
 grp = IC.create_group("/Units")
-grp.attrs["Unit length in cgs (U_L)"] = 1.0
-grp.attrs["Unit mass in cgs (U_M)"] = 1.0
+grp.attrs["Unit length in cgs (U_L)"] = 100
+grp.attrs["Unit mass in cgs (U_M)"] = 1000
 grp.attrs["Unit time in cgs (U_t)"] = 1.0
 grp.attrs["Unit current in cgs (U_I)"] = 1.0
 grp.attrs["Unit temperature in cgs (U_T)"] = 1.0
@@ -173,6 +173,7 @@ grp.create_dataset("Coordinates",  data=sun_coords, dtype="f")
 grp.create_dataset("Velocities", data=sun_vel, dtype="f")
 grp.create_dataset("Masses", data=sun_mass, dtype="f")
 grp.create_dataset("ParticleIDs", data=np.arange(len(gas_parts['particle_mass']), len(gas_parts['particle_mass'])+int(1)))
+
 
 
 
