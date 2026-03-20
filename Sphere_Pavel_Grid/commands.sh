@@ -1,0 +1,1 @@
+cd /mnt/c/users/Павел/desktop/SWIFT/SWIFT/examples/HydroTests/Gas_Disk_Pavel_Grid

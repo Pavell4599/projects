@@ -6,7 +6,7 @@ from parametrs import *
 
 
 box_limit = 12
-point_size = 6
+
 filename = 'sphere_3d_work'
 
 
@@ -63,36 +63,42 @@ for z_now in np.arange(z_0, z_1, z_step):
             y.append(y_now)
             z.append(z_now)
 
-x_sort = []
-y_sort = []
-z_sort = []
-for i in range(len(x)):
-    r = np.sqrt(x[i]**2 + y[i]**2 + z[i]**2)
-    if r <= fig_r:
-        
+# x_sort = []
+# y_sort = []
+# z_sort = []
+# for i in range(len(x)):
+#     r = np.sqrt(x[i]**2 + y[i]**2 + z[i]**2)
+#     if r <= fig_r:
+#         x_sort.append(x[i])
+#         y_sort.append(y[i])
+#         z_sort.append(z[i])
+# x = x_sort
+# y = y_sort
+# z = z_sort
 
 
+point_size = 3
 fig = plt.figure()
 ax = fig.add_subplot(projection='3d')
-sc = ax.scatter(x, y, z, s=point_size, edgecolors='none', color = 'black', alpha=1, marker='.')
+# sc = ax.scatter(x, y, z, s=point_size, edgecolors='none', color = 'black', alpha=1, marker='.')
 #sc = plt.scatter(x, z, s=point_size, edgecolors='none', color = 'black', alpha=1, marker='.')
 
 # radius
-# phi = np.linspace(0, 2 * np.pi, 30)
-# alpha = np.linspace(0, np.pi, 30)
-# phi, alpha = np.meshgrid(phi, alpha)
-# x_rad = []
-# y_rad = []
-# z_rad = []
-# for i in range(len(x)):
-#     x_rad = h * np.sin(alpha) * np.cos(phi) + x[i]
-#     y_rad = h * np.sin(alpha) * np.sin(phi) + y[i]
-#     z_rad = h * np.cos(alpha) + z[i]
-#     sc = ax.plot_surface(x_rad, y_rad, z_rad, 
-#                 color='green', 
-#                 alpha=0.5,    
-#                 linewidth=0,        
-#                 edgecolor='none') 
+phi = np.linspace(0, 2 * np.pi, 30)
+alpha = np.linspace(0, np.pi, 30)
+phi, alpha = np.meshgrid(phi, alpha)
+x_rad = []
+y_rad = []
+z_rad = []
+for i in range(len(x)):
+    x_rad = h * np.sin(alpha) * np.cos(phi) + x[i]
+    y_rad = h * np.sin(alpha) * np.sin(phi) + y[i]
+    z_rad = h * np.cos(alpha) + z[i]
+    sc = ax.plot_surface(x_rad, y_rad, z_rad, 
+                color='green', 
+                alpha=0.5,    
+                linewidth=0,        
+                edgecolor='none') 
 
 
 plt.xlabel('X')
@@ -100,5 +106,5 @@ plt.ylabel('Y')
 plt.xlim(-box_limit, box_limit)
 plt.ylim(-box_limit, box_limit)
 plt.axis('equal')
-plt.savefig('images/' + filename + '.png', dpi = 800)
+plt.savefig('images/' + filename + '.png', dpi = 1000)
 #plt.show()
