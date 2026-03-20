@@ -63,6 +63,13 @@ for z_now in np.arange(z_0, z_1, z_step):
             y.append(y_now)
             z.append(z_now)
 
+x_sort = []
+y_sort = []
+z_sort = []
+for i in range(len(x)):
+    r = np.sqrt(x[i]**2 + y[i]**2 + z[i]**2)
+    if r <= fig_r:
+        
 
 
 fig = plt.figure()
