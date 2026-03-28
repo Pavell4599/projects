@@ -84,8 +84,8 @@ ax = fig.add_subplot(projection='3d')
 #sc = plt.scatter(x, z, s=point_size, edgecolors='none', color = 'black', alpha=1, marker='.')
 
 # radius
-phi = np.linspace(0, 2 * np.pi, 30)
-alpha = np.linspace(0, np.pi, 30)
+phi = np.linspace(0, 2 * np.pi, 20)
+alpha = np.linspace(0, np.pi, 20)
 phi, alpha = np.meshgrid(phi, alpha)
 x_rad = []
 y_rad = []
@@ -95,7 +95,7 @@ for i in range(len(x)):
     y_rad = h * np.sin(alpha) * np.sin(phi) + y[i]
     z_rad = h * np.cos(alpha) + z[i]
     sc = ax.plot_surface(x_rad, y_rad, z_rad, 
-                color='green', 
+                color='yellow', 
                 alpha=0.5,    
                 linewidth=0,        
                 edgecolor='none') 
