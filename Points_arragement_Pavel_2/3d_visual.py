@@ -7,8 +7,7 @@ from mpl_toolkits.mplot3d import Axes3D
 box_limit = 12
 point_size = 24
 filename = 'Star_PAVEL_2'
-h = 3
-N = 1000
+N = 500
 R = 10
 
 
@@ -22,8 +21,6 @@ Acap = Areg
 Ocap = 2 * np.arcsin(np.sqrt(1 / N))
 Ncol = np.round((np.pi - 2 * Ocap) / np.sqrt(Areg))
 Ocol = (np.pi - 2 * Ocap) / Ncol
-# A(i) = 4 * np.pi * (np.sin(O(i) / 2)**2 - np.sin(O(i - 1) / 2)**2)
-# N(i) = A(i) / Areg 
 
 f = [0]
 O = np.arange(Ocap, np.pi, Ocol)
@@ -41,8 +38,10 @@ for i in range(1, len(O)):
 x = np.concatenate((x, np.array([0, 0])))
 y = np.concatenate((y, np.array([0, 0])))
 z = np.concatenate((z, np.array([-R, R])))
-    
-
+h = np.sqrt(Areg / np.pi)   
+print(h)
+h = np.sqrt((R**2 * 4 * np.pi) / (len(x) * np.pi))
+print(h)
 # print(np.degrees(Ocap))
 # print(np.degrees(Ocol))
 # print(Ncol)
@@ -54,8 +53,8 @@ sc = ax.scatter(x, y, z, s=point_size, edgecolors='none', color = 'blue', alpha=
 
 
 def draw_poles():
-    phi = np.linspace(0, 2 * np.pi, 25)
-    alpha = np.linspace(0, np.pi, 15)
+    phi = np.linspace(0, 2 * np.pi, 15)
+    alpha = np.linspace(0, np.pi, 10)
     phi, alpha = np.meshgrid(phi, alpha)
     poles_x = []
     poles_y = []
@@ -70,12 +69,12 @@ def draw_poles():
                     linewidth=0,        
                     edgecolor='none') 
 
-
+draw_poles()
 
 plt.xlabel('X')
 plt.ylabel('Y')
 plt.xlim(-box_limit, box_limit)
 plt.ylim(-box_limit, box_limit)
 plt.axis('equal')
-# plt.savefig('images/' + filename + '.png', dpi = 800)
-plt.show()
+plt.savefig('images/' + filename + '.png', dpi = 800)
+# plt.show()
