@@ -1,0 +1,33 @@
+{
+	"visual_settings": {
+		"GRAPHIC_NAME": {
+			"value": "Super_star_999"
+		},
+		"TYPE_OF_FILE": {
+			"value": ".png"
+		},
+		"MARKER_COLOR": {
+			"value": "red"
+		},
+		"LINE_COLOR": {
+			"value": "blue"
+		},
+		"PIC_QUALITY": {
+			"value": 666
+		},
+		"GRID": {
+			"value": false
+		}
+	},
+	"math_settings": {
+		"N_LAYERS": {
+			"value": 6
+		},
+		"N_SECTORS": {
+			"value": 32
+		},
+		"MIN_RAD": {
+			"value": 0.01
+		}
+	}
+}

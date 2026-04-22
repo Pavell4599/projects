@@ -1,0 +1,23 @@
+{
+    "plot_settings": {
+        "plot_title": { "value": "Подпись изображения" },
+        "grid": { "value": false },
+        "xlim": { "value": 1 },
+        "ylim": { "value": 1 }
+    },
+    "graphics": {
+        "graphic": {
+            "value": [
+                {
+                    "id": "MQ3QY3JVVRTMRTN42EGCYIRREI38E7RU",
+                    "name": "Объект 1",
+                    "add-graphic@@x_coords": { "value": [0, 1, 3] },
+                    "add-graphic@@y_coords": { "value": [0, 2, 5] },
+                    "add-graphic@@color": { "value": "r" },
+                    "add-graphic@@label": { "value": "Не подписан" },
+                    "add-graphic@@marker": { "value": ">" }
+                }
+            ]
+        }
+    }
+}

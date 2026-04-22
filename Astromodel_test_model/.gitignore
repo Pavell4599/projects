@@ -1,0 +1,4 @@
+run
+test_results
+__pycache__
+*.png
